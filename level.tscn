@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://chydhb61m3124"]
+
+[ext_resource type="Script" uid="uid://c1qfci66kb3qb" path="res://addons/godot_eqs/core/eqs_query.gd" id="1_0b4ue"]
+[ext_resource type="Script" uid="uid://bcjruulampd33" path="res://addons/godot_eqs/generators/grid_generator.gd" id="2_f2txt"]
+[ext_resource type="Script" uid="uid://x330l80g2xky" path="res://addons/godot_eqs/tests/distance_test.gd" id="3_1ainy"]
+[ext_resource type="Script" uid="uid://c7qxxnnuv2dpv" path="res://addons/godot_eqs/tests/angle_test.gd" id="4_f2txt"]
+[ext_resource type="Script" uid="uid://v5wrvceqv34n" path="res://addons/godot_eqs/debugger/eqs_debugger.gd" id="4_n6hdu"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_km5ld"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_i2t4f"]
+sky_material = SubResource("ProceduralSkyMaterial_km5ld")
+
+[sub_resource type="Environment" id="Environment_8cye3"]
+background_mode = 2
+sky = SubResource("Sky_i2t4f")
+glow_enabled = true
+
+[sub_resource type="Curve" id="Curve_2orkt"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_vsqyk"]
+vertices = PackedVector3Array(-24.5, 1, -24.5, -24.5, 1, 24.5, 24.5, 1, 24.5, 24.5, 1, -24.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="BoxMesh" id="BoxMesh_iy3pq"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gctoj"]
+size = Vector3(50, 1, 50)
+
+[node name="Node3D" type="Node3D" unique_id=1875271369]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=553381410]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 8, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=725276820]
+environment = SubResource("Environment_8cye3")
+
+[node name="EQSQuery" type="Node3D" parent="." unique_id=126477725]
+script = ExtResource("1_0b4ue")
+metadata/_custom_type_script = "uid://c1qfci66kb3qb"
+
+[node name="EQSGridGenerator" type="Node3D" parent="EQSQuery" unique_id=1302031852]
+script = ExtResource("2_f2txt")
+metadata/_custom_type_script = "uid://bcjruulampd33"
+
+[node name="EQSDistanceTest" type="Node3D" parent="EQSQuery" unique_id=1225579389]
+script = ExtResource("3_1ainy")
+distance_to = 1
+curve_distance = 10.0
+curve = SubResource("Curve_2orkt")
+is_enabled = false
+type = 1
+metadata/_custom_type_script = "uid://x330l80g2xky"
+
+[node name="EQSAngleTest" type="Node3D" parent="EQSQuery" unique_id=1618404576]
+script = ExtResource("4_f2txt")
+type = 1
+metadata/_custom_type_script = "uid://c7qxxnnuv2dpv"
+
+[node name="EQSDebugger" type="Node3D" parent="." unique_id=651871022 node_paths=PackedStringArray("query", "actor", "target")]
+script = ExtResource("4_n6hdu")
+is_enabled = true
+query = NodePath("../EQSQuery")
+actor = NodePath("../Enemy")
+target = NodePath("../Player")
+metadata/_custom_type_script = "uid://v5wrvceqv34n"
+
+[node name="Player" type="Node3D" parent="." unique_id=1014252674]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -5)
+
+[node name="Enemy" type="Node3D" parent="." unique_id=2015440029]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1882670102]
+navigation_mesh = SubResource("NavigationMesh_vsqyk")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D" unique_id=1699029737]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/StaticBody3D" unique_id=141893140]
+mesh = SubResource("BoxMesh_iy3pq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/StaticBody3D" unique_id=860800526]
+shape = SubResource("BoxShape3D_gctoj")
