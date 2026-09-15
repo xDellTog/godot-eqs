@@ -1,5 +1,5 @@
 @tool
-@icon("res://addons/godot_eqs/assets/icons/brick_wall.svg")
+@icon("../assets/icons/brick_wall.svg")
 class_name EQSGenerator extends EQS
 
 @export var is_enabled := true

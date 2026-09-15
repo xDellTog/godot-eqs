@@ -1,8 +1,8 @@
 @tool
-@icon("res://addons/godot_eqs/assets/icons/bug.svg")
+@icon("../assets/icons/bug.svg")
 class_name EQSDebugger extends EQS
 
-var _candidate_material: ShaderMaterial = preload("res://tools/ai/eqs/visual/candidate_material.tres")
+var _candidate_material: ShaderMaterial = preload("res://addons/godot-eqs/addons/godot_eqs/assets/debugger/candidate_material.tres")
 
 @export var is_enabled := false:
 	set(value):

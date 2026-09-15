@@ -1,5 +1,5 @@
 @tool
-@icon("res://addons/godot_eqs/assets/icons/scoreboard.svg")
+@icon("../assets/icons/scoreboard.svg")
 class_name EQSTest extends EQS
 
 enum EQSTestType {filter, score, both}

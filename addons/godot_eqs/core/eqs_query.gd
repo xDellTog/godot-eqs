@@ -1,5 +1,5 @@
 @tool
-@icon("res://addons/godot_eqs/assets/icons/matrix.svg")
+@icon("../assets/icons/matrix.svg")
 class_name EQSQuery extends EQS
  
 
@@ -27,11 +27,14 @@ func execute(context: EQSContext) -> EQSResult:
 	var best: EQSCandidate = null
 
 	for candidate in candidates:
+		if not candidate.valid:
+			continue
+
 		if best == null or candidate.score > best.score:
 			best = candidate
 
-	if best.score == 0:
-		best = null
+	if best == null:
+		return EQSResult.new(candidates)
 
 	return EQSResult.new(candidates, best)
  
