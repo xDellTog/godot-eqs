@@ -1,0 +1,9 @@
+{
+    "explorer.fileNesting.patterns": {
+        "*.gd": "${capture}.gd.uid"
+    },
+    "files.exclude": {
+        "**/*.import": true,
+        "**/*.uid": true
+    }
+}

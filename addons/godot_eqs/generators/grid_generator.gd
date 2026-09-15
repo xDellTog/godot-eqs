@@ -1,0 +1,32 @@
+@tool
+class_name EQSGridGenerator extends EQSGenerator
+
+@export var size := Vector2(10.0, 10.0)
+@export var spacing := 2.0
+@export var post_projection_vertical_offset: float = 0.0
+
+func generate(context: EQSContext) -> Array[EQSCandidate]:
+	var result: Array[EQSCandidate] = []
+
+	var half_x := size.x * 0.5
+	var half_z := size.y * 0.5
+
+	var x := -half_x
+
+	while x <= half_x:
+		var z := -half_z
+
+		while z <= half_z:
+			var point := context.actor.global_position + Vector3(x, 0.0, z)
+
+			var projected = project_to_navigation(point, context)
+
+			if projected != null:
+				projected.y = projected.y + post_projection_vertical_offset
+				result.append(EQSCandidate.new(projected))
+
+			z += spacing
+
+		x += spacing
+
+	return result
