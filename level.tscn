@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://x330l80g2xky" path="res://addons/godot_eqs/tests/distance_test.gd" id="3_1ainy"]
 [ext_resource type="Script" uid="uid://c7qxxnnuv2dpv" path="res://addons/godot_eqs/tests/angle_test.gd" id="4_f2txt"]
 [ext_resource type="Script" uid="uid://v5wrvceqv34n" path="res://addons/godot_eqs/debugger/eqs_debugger.gd" id="4_n6hdu"]
+[ext_resource type="Script" uid="uid://fmrbj4nl7ypl" path="res://addons/godot_eqs/tests/random_test.gd" id="5_1ainy"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_km5ld"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -47,25 +48,41 @@ metadata/_custom_type_script = "uid://c1qfci66kb3qb"
 
 [node name="EQSGridGenerator" type="Node3D" parent="EQSQuery" unique_id=1302031852]
 script = ExtResource("2_f2txt")
+spacing = 1.0
 metadata/_custom_type_script = "uid://bcjruulampd33"
+
+[node name="EQSDistanceTest2" type="Node3D" parent="EQSQuery" unique_id=449726397]
+script = ExtResource("3_1ainy")
+min_distance = 3.0
+max_distance = 5.0
+curve_distance = 10.0
+curve = SubResource("Curve_2orkt")
+type = 0
+metadata/_custom_type_script = "uid://x330l80g2xky"
 
 [node name="EQSDistanceTest" type="Node3D" parent="EQSQuery" unique_id=1225579389]
 script = ExtResource("3_1ainy")
 distance_to = 1
+weight = 2.0
 curve_distance = 10.0
 curve = SubResource("Curve_2orkt")
-is_enabled = false
 type = 1
 metadata/_custom_type_script = "uid://x330l80g2xky"
 
 [node name="EQSAngleTest" type="Node3D" parent="EQSQuery" unique_id=1618404576]
 script = ExtResource("4_f2txt")
+weight = 3.0
 type = 1
 metadata/_custom_type_script = "uid://c7qxxnnuv2dpv"
 
+[node name="EQSRandomTest" type="Node3D" parent="EQSQuery" unique_id=1962570208]
+script = ExtResource("5_1ainy")
+is_enabled = false
+metadata/_custom_type_script = "uid://fmrbj4nl7ypl"
+
 [node name="EQSDebugger" type="Node3D" parent="." unique_id=651871022 node_paths=PackedStringArray("query", "actor", "target")]
 script = ExtResource("4_n6hdu")
-is_enabled = true
+update_interval = 1.0
 query = NodePath("../EQSQuery")
 actor = NodePath("../Enemy")
 target = NodePath("../Player")

@@ -4,6 +4,8 @@ class_name EQSQuery extends EQS
  
 
 func execute(context: EQSContext) -> EQSResult:
+	var weight_sum := 0.0
+	
 	var generator := _get_generator()
 
 	if generator == null:
@@ -23,12 +25,15 @@ func execute(context: EQSContext) -> EQSResult:
 
 				if test.type == EQSTest.EQSTestType.score or test.type == EQSTest.EQSTestType.both:
 					test.score(candidates, context)
+					weight_sum += test.weight
   
 	var best: EQSCandidate = null
 
 	for candidate in candidates:
 		if not candidate.valid:
 			continue
+
+		candidate.score = candidate.score / weight_sum if weight_sum > 0 else 0.0
 
 		if best == null or candidate.score > best.score:
 			best = candidate
