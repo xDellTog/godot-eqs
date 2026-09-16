@@ -23,14 +23,12 @@ func execute() -> EQSResult:
 		return EQSResult.new()
  
 	for test in get_children():
-		if test is EQSTest:
-			if test.is_enabled:
-				if test.type == EQSTest.EQSTestType.filter or test.type == EQSTest.EQSTestType.filter_and_score:
-					test.filter(candidates, context)
-
-				if test.type == EQSTest.EQSTestType.score or test.type == EQSTest.EQSTestType.filter_and_score:
-					test.score(candidates, context)
-					weight_sum += test.weight
+			if test is EQSFilter and test.is_enabled:
+				test.filter(candidates, context)
+				
+			if test is EQSScore and test.is_enabled:
+				test.score(candidates, context)
+				weight_sum += test.weight
   
 	var best: EQSCandidate = null
 

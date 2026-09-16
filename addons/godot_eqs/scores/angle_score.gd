@@ -1,10 +1,8 @@
 @tool
-class_name EQSAngleTest extends EQSTest
-
-@export_category("Score")
-@export_range(-180.0, 180.0) var desired_angle := 0.0
-@export var weight := 1.0
+class_name EQSAngleScore extends EQSScore
  
+@export var weight := 1.0
+@export_range(-180.0, 180.0) var desired_angle := 0.0
 
 func score(candidates: Array[EQSCandidate], context: EQSContext) -> void:
 	if context.target == null:

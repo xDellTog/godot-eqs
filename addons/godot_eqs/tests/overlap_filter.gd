@@ -1,12 +1,9 @@
 @tool
-class_name EQSOverlapTest extends EQSTest
-
-
-@export_category("Filter")
+class_name EQSOverlapFilter extends EQSFilter
+ 
 @export var extent := Vector3(1.0, 1.0, 1.0)
 @export_flags_3d_physics var collision_layers := 1
 @export var bool_match := false
-
 
 func filter(candidates: Array[EQSCandidate], context: EQSContext) -> void:
 	var space_state := context.actor.get_world_3d().direct_space_state

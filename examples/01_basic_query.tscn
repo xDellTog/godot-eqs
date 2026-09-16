@@ -18,12 +18,13 @@
 [ext_resource type="PackedScene" uid="uid://day5r3yotc3v4" path="res://examples/meshes/Wall_Doorway.gltf" id="20_lwhoc"]
 [ext_resource type="PackedScene" uid="uid://cjaspty8q3gct" path="res://examples/meshes/Door_B.gltf" id="21_keitc"]
 [ext_resource type="PackedScene" uid="uid://cipwo627kfw2s" path="res://examples/meshes/Floor.gltf" id="22_c8m16"]
+[ext_resource type="Script" uid="uid://wm4kjtk8wj53" path="res://addons/godot_eqs/scores/distance_score.gd" id="22_ga6c8"]
 [ext_resource type="Script" uid="uid://bxtrxb81o0ekk" path="res://addons/godot_eqs/generators/circle_generator.gd" id="22_keitc"]
+[ext_resource type="Script" uid="uid://mac6tjt25sqt" path="res://addons/godot_eqs/tests/distance_filter.gd" id="23_c8m16"]
 [ext_resource type="Script" uid="uid://c1qfci66kb3qb" path="res://addons/godot_eqs/core/eqs_query.gd" id="23_ga6c8"]
 [ext_resource type="PackedScene" uid="uid://b18xmvwyf1pyb" path="res://examples/meshes/Wall_Window_Open.gltf" id="23_lwhoc"]
 [ext_resource type="Script" uid="uid://cds5vo230nvf1" path="res://addons/godot_eqs/core/eqs_context.gd" id="24_c8m16"]
 [ext_resource type="PackedScene" uid="uid://bfn786ukv8c7y" path="res://examples/meshes/Pallet_Small.gltf" id="24_keitc"]
-[ext_resource type="Script" uid="uid://x330l80g2xky" path="res://addons/godot_eqs/tests/distance_test.gd" id="25_lr2er"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_u7yhv"]
 panorama = ExtResource("1_1icjt")
@@ -45,7 +46,7 @@ polygons = [PackedInt32Array(0, 2, 1), PackedInt32Array(4, 3, 5), PackedInt32Arr
 agent_radius = 1.5
 agent_max_slope = 46.0
 
-[sub_resource type="Curve" id="Curve_2f641"]
+[sub_resource type="Curve" id="Curve_dvti7"]
 _data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
 point_count = 2
 
@@ -508,16 +509,20 @@ transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
 script = ExtResource("22_keitc")
 metadata/_custom_type_script = "uid://bxtrxb81o0ekk"
 
-[node name="EQSDistanceTest" type="Node3D" parent="Manny2/EQSQuery" unique_id=414471837]
-script = ExtResource("25_lr2er")
+[node name="EQSDistanceFilter" type="Node3D" parent="Manny2/EQSQuery" unique_id=223287645]
+script = ExtResource("23_c8m16")
 distance_to = 1
-min_distance = 3.0
-curve_distance = 10.0
-curve = SubResource("Curve_2f641")
-metadata/_custom_type_script = "uid://x330l80g2xky"
+min_distance = 2.0
+max_distance = 5.0
+metadata/_custom_type_script = "uid://mac6tjt25sqt"
+
+[node name="EQSDistanceScore" type="Node3D" parent="Manny2/EQSQuery" unique_id=599494936]
+script = ExtResource("22_ga6c8")
+distance_to = 1
+curve = SubResource("Curve_dvti7")
+metadata/_custom_type_script = "uid://wm4kjtk8wj53"
 
 [node name="Timer" type="Timer" parent="Manny2" unique_id=841991607]
-wait_time = 3.0
 autostart = true
 
 [node name="EQSDebugger" type="Node3D" parent="." unique_id=651871022 node_paths=PackedStringArray("query")]

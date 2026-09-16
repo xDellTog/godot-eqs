@@ -1,11 +1,10 @@
 @tool
-class_name EQSLineOfSightTest extends EQSTest
-
-@export_category("Filter")
-@export var from: EQSContext.Point = EQSContext.Point.context_actor 
-@export var bool_match := false
+class_name EQSLineOfSightFilter extends EQSFilter
+ 
+@export var from: EQSContext.Point = EQSContext.Point.context_actor
 @export var point_of_view_height := 1.0
 @export_flags_3d_physics var collision_mask := 1
+@export var bool_match := false
 
 func filter(candidates: Array[EQSCandidate], context: EQSContext) -> void:
 	var context_from_position = (

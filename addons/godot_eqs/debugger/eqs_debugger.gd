@@ -20,6 +20,8 @@ var update_interval := 0.25
 var _timer := 0.0
 
 @export var show_scores := true
+@export var score_size := 1.0
+@export var score_y_offset := 0.5
  
 @export_category("EQSQuery")
 @export var query: EQSQuery
@@ -124,8 +126,8 @@ func _create_candidate_mesh(index: int, candidate: EQSCandidate, winner: EQSCand
 		else:
 			score.text = ""
 
-		score.scale = Vector3(.5, .5, .5)
-		score.position.y = .3
+		score.scale = Vector3(score_size, score_size, score_size)
+		score.position.y = score_y_offset
 	else:
 		if mesh_instance.get_child_count() > 0:
 			var score = mesh_instance.get_child(0) as Label3D

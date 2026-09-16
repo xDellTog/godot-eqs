@@ -1,10 +1,8 @@
 @tool
-class_name EQSNavigationTest extends EQSTest
-
-@export_category("Filter")
+class_name EQSNavigationFilter extends EQSFilter
+ 
 @export var min_reachable_distance := 1.0
 @export var max_path_length := 100.0
- 
 
 func filter(candidates: Array[EQSCandidate], context: EQSContext) -> void:
 	var map := context.actor.get_world_3d().navigation_map

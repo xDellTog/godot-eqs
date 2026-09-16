@@ -2,7 +2,7 @@
 class_name EQSGridGenerator extends EQSGenerator
 
 @export var size := 10.0
-@export var spacing := 1.0
+@export var spacing := 2.0
 @export var post_projection_vertical_offset: float = 0.0
 @export var use_actor_rotation := true
 

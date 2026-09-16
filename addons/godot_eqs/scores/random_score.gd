@@ -1,9 +1,7 @@
 @tool
-class_name EQSRandomTest extends EQSTest
+class_name EQSRandomScore extends EQSScore
 
-@export_category("Score")
 @export var weight := 1.0
- 
 
 func score(candidates: Array[EQSCandidate], _context: EQSContext) -> void:
 	for candidate in candidates:

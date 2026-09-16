@@ -6,7 +6,7 @@ var valid := true
 var score := 0.0
 
 var tested := false
-var filtered_by: EQSTest
+var filtered_by: EQSFilter
 
 var test_results := {}
 var score_results := {}
