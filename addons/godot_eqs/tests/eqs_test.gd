@@ -2,10 +2,10 @@
 @icon("../assets/icons/scoreboard.svg")
 class_name EQSTest extends EQS
 
-enum EQSTestType {filter, score, both}
+enum EQSTestType {filter_and_score, filter, score}
 
 @export var is_enabled := true
-@export var type := EQSTestType.both
+@export var type := EQSTestType.filter_and_score
 
 func filter(_candidates: Array[EQSCandidate], _context: EQSContext) -> void:
     pass

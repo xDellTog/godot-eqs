@@ -1,16 +1,16 @@
 @tool
 class_name EQSGridGenerator extends EQSGenerator
 
-@export var size := Vector2(10.0, 10.0)
-@export var spacing := 2.0
+@export var size := 10.0
+@export var spacing := 1.0
 @export var post_projection_vertical_offset: float = 0.0
 @export var use_actor_rotation := true
 
 func generate(context: EQSContext) -> Array[EQSCandidate]:
 	var result: Array[EQSCandidate] = []
 
-	var half_x := size.x * 0.5
-	var half_z := size.y * 0.5
+	var half_x := size * 0.5
+	var half_z := size * 0.5
 
 	var x := -half_x
 

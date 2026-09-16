@@ -25,10 +25,10 @@ func execute() -> EQSResult:
 	for test in get_children():
 		if test is EQSTest:
 			if test.is_enabled:
-				if test.type == EQSTest.EQSTestType.filter or test.type == EQSTest.EQSTestType.both:
+				if test.type == EQSTest.EQSTestType.filter or test.type == EQSTest.EQSTestType.filter_and_score:
 					test.filter(candidates, context)
 
-				if test.type == EQSTest.EQSTestType.score or test.type == EQSTest.EQSTestType.both:
+				if test.type == EQSTest.EQSTestType.score or test.type == EQSTest.EQSTestType.filter_and_score:
 					test.score(candidates, context)
 					weight_sum += test.weight
   
