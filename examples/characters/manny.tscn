@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://dj62janjybmw2"]
+
+[ext_resource type="Script" uid="uid://ldhtwcnau2wq" path="res://examples/characters/manny.gd" id="1_78okc"]
+[ext_resource type="PackedScene" uid="uid://5o2vtsnvn8jr" path="res://examples/characters/Mannequin_Medium.glb" id="2_rc0xt"]
+[ext_resource type="Animation" uid="uid://dve51wrkm6lot" path="res://examples/characters/animations/Idle_B.res" id="3_1uboh"]
+[ext_resource type="Animation" uid="uid://vnytuerlu46y" path="res://examples/characters/animations/Running_B.res" id="4_5m2gc"]
+[ext_resource type="Animation" uid="uid://nb3flijta7ti" path="res://examples/characters/animations/T-Pose.res" id="5_iikvg"]
+[ext_resource type="Animation" uid="uid://x7e2qx1uo31p" path="res://examples/characters/animations/Walking_B.res" id="6_5vhnh"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jjkhk"]
+_data = {
+&"Idle_B": ExtResource("3_1uboh"),
+&"Running_B": ExtResource("4_5m2gc"),
+&"T-Pose": ExtResource("5_iikvg"),
+&"Walking_B": ExtResource("6_5vhnh")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iy3pq"]
+radius = 0.7
+height = 2.2
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h3df8"]
+animation = &"locomotion/Idle_B"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_78okc"]
+animation = &"locomotion/Walking_B"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rc0xt"]
+animation = &"locomotion/Running_B"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1uboh"]
+animation = &"locomotion/Idle_B"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_hi0nk"]
+min_space = 0.0
+max_space = 2.0
+blend_point_0/node = SubResource("AnimationNodeAnimation_78okc")
+blend_point_0/pos = 1.0
+blend_point_0/name = &"locomotion_Walking_B"
+blend_point_1/node = SubResource("AnimationNodeAnimation_rc0xt")
+blend_point_1/pos = 2.0
+blend_point_1/name = &"locomotion_Running_B"
+blend_point_2/node = SubResource("AnimationNodeAnimation_1uboh")
+blend_point_2/pos = 0.0
+blend_point_2/name = &"locomotion_Idle_B"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0mq0q"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_w6wyu"]
+xfade_time = 0.25
+advance_mode = 2
+advance_condition = &"is_moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_68rhg"]
+xfade_time = 0.25
+advance_mode = 2
+advance_condition = &"is_not_moving"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_xr7lw"]
+states/Idle/node = SubResource("AnimationNodeAnimation_h3df8")
+states/Idle/position = Vector2(417.33334, 99.77777)
+states/Locomotion/node = SubResource("AnimationNodeBlendSpace1D_hi0nk")
+states/Locomotion/position = Vector2(627.99994, 100)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_0mq0q"), "Idle", "Locomotion", SubResource("AnimationNodeStateMachineTransition_w6wyu"), "Locomotion", "Idle", SubResource("AnimationNodeStateMachineTransition_68rhg")]
+graph_offset = Vector2(-402, -90)
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_iy3pq"]
+graph_offset = Vector2(-915.3333, -25.333334)
+nodes/Locomotion/node = SubResource("AnimationNodeStateMachine_xr7lw")
+nodes/Locomotion/position = Vector2(-66.666664, 66.666664)
+node_connections = [&"output", 0, &"Locomotion"]
+
+[node name="Manny" type="CharacterBody3D" unique_id=677890117]
+script = ExtResource("1_78okc")
+
+[node name="Mannequin_Medium" parent="." unique_id=562382334 instance=ExtResource("2_rc0xt")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Mannequin_Medium" unique_id=2014104982]
+libraries/locomotion = SubResource("AnimationLibrary_jjkhk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1756403585]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+shape = SubResource("CapsuleShape3D_iy3pq")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1072882389]
+root_node = NodePath("../Mannequin_Medium")
+tree_root = SubResource("AnimationNodeBlendTree_iy3pq")
+anim_player = NodePath("../Mannequin_Medium/AnimationPlayer")
+parameters/Locomotion/conditions/is_moving = false
+parameters/Locomotion/conditions/is_not_moving = true
+parameters/Locomotion/Locomotion/blend_position = 0.0038548023
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1615618877]

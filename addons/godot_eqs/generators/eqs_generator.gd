@@ -8,12 +8,7 @@ class_name EQSGenerator extends EQS
 
 @export var projection_up := 2.0
 @export var projection_down := 2.0
-
-@export var max_projection_distance := 0.5
 @export var max_horizontal_distance := 0.5
-@export var vertical_search_height := 5.0
-@export var vertical_step := 0.5
-
 @export var use_fallback := true
 @export var max_fallback_distance := 2.0
 
@@ -39,10 +34,10 @@ func project_to_navigation(point: Vector3, context: EQSContext, ) -> Variant:
 
 	var closest := NavigationServer3D.map_get_closest_point(map, point)
 
-	if closest.distance_to(point) <= max_fallback_distance:
-		return closest
+	if closest.distance_to(point) > max_fallback_distance:
+		return null
 
-	return null
+	return closest
 
 
 func _project_vertical(point: Vector3, context: EQSContext, map: RID) -> Variant:
