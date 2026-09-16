@@ -17,10 +17,8 @@
 [ext_resource type="PackedScene" uid="uid://dpx5cn1sc2hj2" path="res://examples/meshes/Wall.gltf" id="19_ywail"]
 [ext_resource type="PackedScene" uid="uid://day5r3yotc3v4" path="res://examples/meshes/Wall_Doorway.gltf" id="20_lwhoc"]
 [ext_resource type="PackedScene" uid="uid://cjaspty8q3gct" path="res://examples/meshes/Door_B.gltf" id="21_keitc"]
+[ext_resource type="Script" uid="uid://bcjruulampd33" path="res://addons/godot_eqs/generators/grid_generator.gd" id="21_lwhoc"]
 [ext_resource type="PackedScene" uid="uid://cipwo627kfw2s" path="res://examples/meshes/Floor.gltf" id="22_c8m16"]
-[ext_resource type="Script" uid="uid://wm4kjtk8wj53" path="res://addons/godot_eqs/scores/distance_score.gd" id="22_ga6c8"]
-[ext_resource type="Script" uid="uid://bxtrxb81o0ekk" path="res://addons/godot_eqs/generators/circle_generator.gd" id="22_keitc"]
-[ext_resource type="Script" uid="uid://mac6tjt25sqt" path="res://addons/godot_eqs/tests/distance_filter.gd" id="23_c8m16"]
 [ext_resource type="Script" uid="uid://c1qfci66kb3qb" path="res://addons/godot_eqs/core/eqs_query.gd" id="23_ga6c8"]
 [ext_resource type="PackedScene" uid="uid://b18xmvwyf1pyb" path="res://examples/meshes/Wall_Window_Open.gltf" id="23_lwhoc"]
 [ext_resource type="Script" uid="uid://cds5vo230nvf1" path="res://addons/godot_eqs/core/eqs_context.gd" id="24_c8m16"]
@@ -45,10 +43,6 @@ vertices = PackedVector3Array(-7.5, 1, -5.75, -7, 1, -7.75, -8.5, 1, -8.75, -15.
 polygons = [PackedInt32Array(0, 2, 1), PackedInt32Array(4, 3, 5), PackedInt32Array(5, 3, 6), PackedInt32Array(6, 3, 7), PackedInt32Array(7, 3, 8), PackedInt32Array(0, 5, 2), PackedInt32Array(2, 5, 6), PackedInt32Array(8, 9, 7), PackedInt32Array(8, 10, 9), PackedInt32Array(12, 11, 13), PackedInt32Array(13, 11, 15), PackedInt32Array(13, 15, 14), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 19), PackedInt32Array(20, 15, 21), PackedInt32Array(21, 15, 11), PackedInt32Array(18, 19, 14), PackedInt32Array(14, 19, 13), PackedInt32Array(23, 22, 24), PackedInt32Array(24, 22, 25), PackedInt32Array(27, 26, 28), PackedInt32Array(28, 26, 29), PackedInt32Array(32, 31, 30), PackedInt32Array(32, 30, 33), PackedInt32Array(33, 30, 24), PackedInt32Array(29, 26, 34), PackedInt32Array(34, 26, 33), PackedInt32Array(25, 34, 24), PackedInt32Array(24, 34, 33), PackedInt32Array(12, 13, 31), PackedInt32Array(31, 13, 30), PackedInt32Array(38, 37, 35), PackedInt32Array(35, 37, 36), PackedInt32Array(42, 41, 39), PackedInt32Array(39, 41, 40), PackedInt32Array(16, 17, 43), PackedInt32Array(43, 17, 44), PackedInt32Array(0, 1, 45), PackedInt32Array(48, 47, 46), PackedInt32Array(28, 47, 27), PackedInt32Array(27, 47, 48), PackedInt32Array(0, 45, 49), PackedInt32Array(49, 45, 50), PackedInt32Array(43, 44, 50), PackedInt32Array(50, 44, 51), PackedInt32Array(20, 21, 52), PackedInt32Array(52, 21, 48), PackedInt32Array(46, 54, 53), PackedInt32Array(51, 48, 50), PackedInt32Array(50, 48, 49), PackedInt32Array(49, 48, 53), PackedInt32Array(53, 48, 46), PackedInt32Array(53, 55, 49), PackedInt32Array(51, 52, 48), PackedInt32Array(57, 56, 58), PackedInt32Array(58, 56, 60), PackedInt32Array(58, 60, 59), PackedInt32Array(63, 62, 64), PackedInt32Array(64, 62, 61), PackedInt32Array(3, 4, 65), PackedInt32Array(67, 66, 68), PackedInt32Array(68, 66, 65), PackedInt32Array(65, 66, 3), PackedInt32Array(23, 69, 22), PackedInt32Array(22, 69, 54), PackedInt32Array(71, 70, 72), PackedInt32Array(72, 70, 73), PackedInt32Array(76, 75, 74), PackedInt32Array(53, 78, 77), PackedInt32Array(80, 79, 78), PackedInt32Array(73, 81, 82), PackedInt32Array(82, 81, 80), PackedInt32Array(54, 69, 76), PackedInt32Array(84, 81, 83), PackedInt32Array(83, 81, 70), PackedInt32Array(70, 81, 73), PackedInt32Array(53, 80, 78), PackedInt32Array(75, 85, 74), PackedInt32Array(87, 86, 88), PackedInt32Array(88, 86, 89), PackedInt32Array(80, 53, 82), PackedInt32Array(82, 53, 54), PackedInt32Array(82, 54, 76), PackedInt32Array(82, 76, 74), PackedInt32Array(89, 86, 90), PackedInt32Array(89, 90, 91), PackedInt32Array(91, 90, 83), PackedInt32Array(83, 90, 84), PackedInt32Array(74, 92, 82), PackedInt32Array(96, 95, 93), PackedInt32Array(93, 95, 94), PackedInt32Array(100, 99, 97), PackedInt32Array(97, 99, 98), PackedInt32Array(102, 71, 101), PackedInt32Array(101, 71, 72), PackedInt32Array(103, 105, 66), PackedInt32Array(66, 105, 104), PackedInt32Array(101, 106, 102), PackedInt32Array(102, 106, 105), PackedInt32Array(105, 106, 104), PackedInt32Array(66, 67, 103)]
 agent_radius = 1.5
 agent_max_slope = 46.0
-
-[sub_resource type="Curve" id="Curve_dvti7"]
-_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
-point_count = 2
 
 [node name="Node3D" type="Node3D" unique_id=1875271369]
 
@@ -483,7 +477,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.1
 transform = Transform3D(-4.371139e-08, 0.25881904, 0.9659258, 0, 0.96592593, -0.25881907, -1.0000001, -1.13133405e-08, -4.2221963e-08, -0.39999962, 0.8, 16.5)
 
 [node name="Manny" parent="." unique_id=677890117 instance=ExtResource("8_r2183")]
-transform = Transform3D(0.49999997, 0, 0.86602545, 0, 1, 0, -0.86602545, 0, 0.49999997, 2, 0.5, 0.4641018)
+transform = Transform3D(0.25881898, 0, 0.9659258, 0, 1, 0, -0.9659258, 0, 0.25881898, 0, 0.5, 3.4641018)
 floor_max_angle = 0.80285144
 floor_snap_length = 2.0
 
@@ -493,7 +487,6 @@ floor_max_angle = 0.80285144
 floor_snap_length = 2.0
 
 [node name="EQSQuery" type="Node3D" parent="Manny2" unique_id=269269658]
-transform = Transform3D(1.0000001, 0, 1.4901161e-08, 0, 1, 0, -1.4901161e-08, 0, 1.0000001, -4, -0.5, 0)
 script = ExtResource("23_ga6c8")
 metadata/_custom_type_script = "uid://c1qfci66kb3qb"
 
@@ -504,31 +497,17 @@ actor = NodePath("../..")
 target = NodePath("../../../Manny")
 metadata/_custom_type_script = "uid://cds5vo230nvf1"
 
-[node name="EQSGridGenerator" type="Node3D" parent="Manny2/EQSQuery" unique_id=327262833]
+[node name="EQSGridGenerator" type="Node3D" parent="Manny2/EQSQuery" unique_id=236890174]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
-script = ExtResource("22_keitc")
-metadata/_custom_type_script = "uid://bxtrxb81o0ekk"
-
-[node name="EQSDistanceFilter" type="Node3D" parent="Manny2/EQSQuery" unique_id=223287645]
-script = ExtResource("23_c8m16")
-distance_to = 1
-min_distance = 2.0
-max_distance = 5.0
-metadata/_custom_type_script = "uid://mac6tjt25sqt"
-
-[node name="EQSDistanceScore" type="Node3D" parent="Manny2/EQSQuery" unique_id=599494936]
-script = ExtResource("22_ga6c8")
-distance_to = 1
-curve = SubResource("Curve_dvti7")
-metadata/_custom_type_script = "uid://wm4kjtk8wj53"
-
-[node name="Timer" type="Timer" parent="Manny2" unique_id=841991607]
-autostart = true
+script = ExtResource("21_lwhoc")
+metadata/_custom_type_script = "uid://bcjruulampd33"
 
 [node name="EQSDebugger" type="Node3D" parent="." unique_id=651871022 node_paths=PackedStringArray("query")]
 script = ExtResource("6_lifkq")
 is_enabled = true
 update_interval = 1.0
+score_size = null
+score_y_offset = null
 query = NodePath("../Manny2/EQSQuery")
 metadata/_custom_type_script = "uid://v5wrvceqv34n"
 
@@ -542,5 +521,3 @@ script = ExtResource("10_hs3ov")
 player = NodePath("../Manny")
 camera = NodePath("../Camera3D")
 camera_offset = Vector3(15, 12, 15)
-
-[connection signal="timeout" from="Manny2/Timer" to="Manny2" method="_on_timer_timeout"]

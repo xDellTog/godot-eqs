@@ -7,11 +7,13 @@ class_name Manny extends CharacterBody3D
 @onready var eqs_query: EQSQuery = $EQSQuery
 @onready var context: EQSContext = $EQSQuery/EQSContext
 
+var is_moving := false
 
 const ROTATION_SPEED = 15.0
 const SPEED = 4.0
 const JUMP_VELOCITY = 4.5
 
+signal finish_locomotion()
 
 func _on_timer_timeout() -> void:
 	if navigation_agent.is_navigation_finished() and eqs_query and context:
@@ -34,13 +36,17 @@ func set_target_position(target_position: Vector3):
 func handle_ai_locomotion(delta):
 	if is_on_floor():
 		if navigation_agent.is_navigation_finished():
+			if is_moving:
+				finish_locomotion.emit()
+
 			velocity.x = 0
 			velocity.z = 0
 
-			animation_tree.set("parameters/Locomotion/conditions/is_moving", false)
-			animation_tree.set("parameters/Locomotion/conditions/is_not_moving", true)
+			is_moving = false
+			animation_tree.set("parameters/Locomotion/conditions/is_moving", is_moving)
+			animation_tree.set("parameters/Locomotion/conditions/is_not_moving", not is_moving)
 			animation_tree.set("parameters/Locomotion/Locomotion/blend_position", 0)
-			
+
 			move_and_slide()
 			return
 
@@ -55,8 +61,9 @@ func handle_ai_locomotion(delta):
 
 		rotation.y = lerp_angle(rotation.y, atan2(direction.x, direction.z), delta * ROTATION_SPEED)
 
-		animation_tree.set("parameters/Locomotion/conditions/is_moving", true)
-		animation_tree.set("parameters/Locomotion/conditions/is_not_moving", false)
+		is_moving = true
+		animation_tree.set("parameters/Locomotion/conditions/is_moving", is_moving)
+		animation_tree.set("parameters/Locomotion/conditions/is_not_moving", not is_moving)
 		animation_tree.set("parameters/Locomotion/Locomotion/blend_position", snapped_speed)
 
 		move_and_slide()

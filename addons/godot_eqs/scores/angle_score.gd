@@ -2,15 +2,20 @@
 class_name EQSAngleScore extends EQSScore
  
 @export var weight := 1.0
+@export var angle_to: EQSContext.Point = EQSContext.Point.context_actor
 @export_range(-180.0, 180.0) var desired_angle := 0.0
 
 func score(candidates: Array[EQSCandidate], context: EQSContext) -> void:
-	if context.target == null:
+	var context_point: Node3D = (
+		context.actor if angle_to == EQSContext.Point.context_actor
+		else context.target
+	)
+
+	if not context_point:
 		return
- 
-	var actor := context.actor
-	var forward := -actor.global_basis.z
-	var right := actor.global_basis.x
+
+	var forward := -context_point.global_basis.z
+	var right := context_point.global_basis.x
 
 	for candidate in candidates:
 		candidate.tested = true
@@ -18,7 +23,7 @@ func score(candidates: Array[EQSCandidate], context: EQSContext) -> void:
 		if not candidate.valid:
 			continue
 
-		var direction := (candidate.position - actor.global_position).normalized()
+		var direction := (candidate.position - context_point.global_position).normalized()
 
 		var angle := atan2(right.dot(direction), forward.dot(direction))
 

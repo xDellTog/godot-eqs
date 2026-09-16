@@ -20,6 +20,24 @@ func _physics_process(delta: float) -> void:
 	camera.global_position = camera.global_position.lerp(camera_position / manny_in_scene + camera_offset, delta * CAMERA_SPEED)
  
 func _input(event):
+	if event is InputEventMouseMotion:
+		if not player.is_moving:
+			var parent := get_parent() as Node3D
+			var mouse_pos = event.position
+			var space_state := parent.get_world_3d().direct_space_state
+			
+			var origin = camera.project_ray_origin(mouse_pos)
+			var end = origin + camera.project_ray_normal(mouse_pos) * RAY_LENGTH
+			
+			var query = PhysicsRayQueryParameters3D.create(origin, end)
+			var result := space_state.intersect_ray(query)
+			if result:
+				var direction := player.global_position.direction_to(result.position)
+				var angle := player.rotation.y + angle_difference(player.rotation.y, atan2(direction.x, direction.z))
+				var tween = player.create_tween().set_parallel()
+				tween.tween_property(player, "rotation:y", angle, .25)
+
+
 	if event is InputEventMouseButton and event.pressed:
 		var parent := get_parent() as Node3D
 		var mouse_pos = event.position
