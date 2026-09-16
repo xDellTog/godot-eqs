@@ -1,24 +1,34 @@
 class_name Manny extends CharacterBody3D
+ 
 
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var navigation_agent: NavigationAgent3D = $NavigationAgent3D
- 
+
+@onready var eqs_query: EQSQuery = $EQSQuery
+@onready var context: EQSContext = $EQSQuery/EQSContext
+
 
 const ROTATION_SPEED = 15.0
 const SPEED = 4.0
 const JUMP_VELOCITY = 4.5
 
 
+func _on_timer_timeout() -> void:
+	if navigation_agent.is_navigation_finished() and eqs_query and context:
+		var result = eqs_query.execute()
+
+		if result.winner:
+			set_target_position(result.winner.position)
+
+
 func _physics_process(delta: float) -> void:
 	handle_ai_locomotion(delta)
-	pass
 
 
 func set_target_position(target_position: Vector3):
 	var map := get_world_3d().navigation_map
 	var closest_point := NavigationServer3D.map_get_closest_point(map, target_position)
 	navigation_agent.target_position = closest_point
-	pass
 
 
 func handle_ai_locomotion(delta):

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dj62janjybmw2"]
 
 [ext_resource type="Script" uid="uid://ldhtwcnau2wq" path="res://examples/characters/manny.gd" id="1_78okc"]
-[ext_resource type="PackedScene" uid="uid://5o2vtsnvn8jr" path="res://examples/characters/Mannequin_Medium.glb" id="2_rc0xt"]
+[ext_resource type="PackedScene" uid="uid://5o2vtsnvn8jr" path="res://examples/characters/meshes/Mannequin_Medium.glb" id="2_rc0xt"]
 [ext_resource type="Animation" uid="uid://dve51wrkm6lot" path="res://examples/characters/animations/Idle_B.res" id="3_1uboh"]
 [ext_resource type="Animation" uid="uid://vnytuerlu46y" path="res://examples/characters/animations/Running_B.res" id="4_5m2gc"]
 [ext_resource type="Animation" uid="uid://nb3flijta7ti" path="res://examples/characters/animations/T-Pose.res" id="5_iikvg"]
@@ -66,12 +66,13 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(-402, -90)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_iy3pq"]
-graph_offset = Vector2(-915.3333, -25.333334)
+graph_offset = Vector2(-892.8486, -40.545456)
 nodes/Locomotion/node = SubResource("AnimationNodeStateMachine_xr7lw")
 nodes/Locomotion/position = Vector2(-66.666664, 66.666664)
 node_connections = [&"output", 0, &"Locomotion"]
 
 [node name="Manny" type="CharacterBody3D" unique_id=677890117]
+collision_layer = 2
 script = ExtResource("1_78okc")
 
 [node name="Mannequin_Medium" parent="." unique_id=562382334 instance=ExtResource("2_rc0xt")]

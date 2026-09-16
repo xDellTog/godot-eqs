@@ -2,14 +2,19 @@
 @icon("../assets/icons/matrix.svg")
 class_name EQSQuery extends EQS
  
-
-func execute(context: EQSContext) -> EQSResult:
+func execute() -> EQSResult:
 	var weight_sum := 0.0
 	
 	var generator := _get_generator()
 
 	if generator == null:
 		push_error("EQSQuery requires a generator.")
+		return EQSResult.new()
+	
+	var context := _get_context()
+
+	if context == null:
+		push_error("EQSQuery requires a context.")
 		return EQSResult.new()
  
 	var candidates := generator.generate(context)
@@ -48,5 +53,12 @@ func _get_generator() -> EQSGenerator:
 		if generator is EQSGenerator:
 			if generator.is_enabled:
 				return generator
+
+	return null
+
+func _get_context() -> EQSContext:
+	for context in get_children():
+		if context is EQSContext:
+			return context
 
 	return null

@@ -24,10 +24,6 @@ var _timer := 0.0
 @export_category("EQSQuery")
 @export var query: EQSQuery
 
-@export_category("EQSContext")
-@export var actor: Node3D
-@export var target: Node3D
- 
 
 func _process(delta: float) -> void:
 	if not is_enabled:
@@ -50,10 +46,8 @@ func _process(delta: float) -> void:
 
 
 func execute_debug():
-	var context := _create_context()
-
 	if query:
-		var result := query.execute(context)
+		var result := query.execute()
 
 		_clear_unnecessary_debug(result.candidates)
 
@@ -64,23 +58,19 @@ func _clear_debug():
 	for child in get_children():
 		child.queue_free()
 
+
 func _clear_unnecessary_debug(candidates: Array[EQSCandidate]):
 	for child in get_children():
 		if child is MeshInstance3D:
 			if child.get_meta("candidate_index") >= candidates.size():
 				child.queue_free()
-
-func _create_context() -> EQSContext:
-	var context = EQSContext.new()
-	context.actor = actor
-	context.target = target
-	return context
-
+ 
 
 func _display_result(result: EQSResult):
 	for i in range(result.candidates.size()):
 		_create_candidate_mesh(i, result.candidates[i], result.winner)
  
+
 func _create_candidate_mesh(index: int, candidate: EQSCandidate, winner: EQSCandidate) -> void:
 	var mesh_instance: MeshInstance3D = null
 

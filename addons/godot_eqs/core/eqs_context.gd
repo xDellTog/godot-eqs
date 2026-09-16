@@ -1,4 +1,4 @@
-class_name EQSContext extends RefCounted
+class_name EQSContext extends EQS
 
 
 enum Point {
@@ -7,5 +7,5 @@ enum Point {
 }
 
 
-var actor: Node3D
-var target: Node3D
+@export var actor: Node3D
+@export var target: Node3D
