@@ -5,6 +5,10 @@ class_name EQSNavigationFilter extends EQSFilter
 @export var max_path_length := 100.0
 
 func filter(candidates: Array[EQSCandidate], context: EQSContext) -> void:
+	if context.actor == null:
+		push_error("Context points are null.")
+		return
+		
 	var map := context.actor.get_world_3d().navigation_map
 
 	for candidate in candidates:

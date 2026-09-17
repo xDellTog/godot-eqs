@@ -16,7 +16,11 @@ func filter(candidates: Array[EQSCandidate], context: EQSContext) -> void:
 		context.target if from == EQSContext.Point.context_actor
 		else context.actor
 	)
- 
+ 	
+	if context_from_position == null or context_to_position == null:
+		push_error("Context points are null.")
+		return
+
 	var space_state := context_from_position.get_world_3d().direct_space_state
 
 	for candidate in candidates:

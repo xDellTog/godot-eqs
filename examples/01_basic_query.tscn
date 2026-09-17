@@ -506,8 +506,6 @@ metadata/_custom_type_script = "uid://bcjruulampd33"
 script = ExtResource("6_lifkq")
 is_enabled = true
 update_interval = 1.0
-score_size = null
-score_y_offset = null
 query = NodePath("../Manny2/EQSQuery")
 metadata/_custom_type_script = "uid://v5wrvceqv34n"
 

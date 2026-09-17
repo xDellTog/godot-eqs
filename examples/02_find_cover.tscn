@@ -22,10 +22,10 @@
 [ext_resource type="Script" uid="uid://cds5vo230nvf1" path="res://addons/godot_eqs/core/eqs_context.gd" id="20_cd8ny"]
 [ext_resource type="Script" uid="uid://bcjruulampd33" path="res://addons/godot_eqs/generators/grid_generator.gd" id="21_ja5ug"]
 [ext_resource type="Script" uid="uid://v5wrvceqv34n" path="res://addons/godot_eqs/debugger/eqs_debugger.gd" id="23_fcsy8"]
-[ext_resource type="Script" uid="uid://br4pcsge0om0b" path="res://addons/godot_eqs/tests/navigation_filter.gd" id="23_igswn"]
-[ext_resource type="Script" uid="uid://dbj7mgse7t1gw" path="res://addons/godot_eqs/tests/line_of_sight_filter.gd" id="23_ygni4"]
+[ext_resource type="Script" uid="uid://br4pcsge0om0b" path="res://addons/godot_eqs/filters/navigation_filter.gd" id="23_igswn"]
+[ext_resource type="Script" uid="uid://dbj7mgse7t1gw" path="res://addons/godot_eqs/filters/line_of_sight_filter.gd" id="23_ygni4"]
 [ext_resource type="Script" uid="uid://bob7qtn2iv7o7" path="res://examples/scripts/player_component.gd" id="24_k220f"]
-[ext_resource type="Script" uid="uid://dojs8m02eg6a1" path="res://addons/godot_eqs/tests/overlap_filter.gd" id="24_u460k"]
+[ext_resource type="Script" uid="uid://dojs8m02eg6a1" path="res://addons/godot_eqs/filters/overlap_filter.gd" id="24_u460k"]
 [ext_resource type="PackedScene" uid="uid://ch4ilm7onsnl4" path="res://examples/meshes/Cube_Prototype_Small.gltf" id="26_u460k"]
 [ext_resource type="Script" uid="uid://wm4kjtk8wj53" path="res://addons/godot_eqs/scores/distance_score.gd" id="26_wr4tn"]
 
@@ -555,6 +555,8 @@ autostart = true
 
 [node name="EQSDebugger" type="Node3D" parent="." unique_id=651871022 node_paths=PackedStringArray("query")]
 script = ExtResource("23_fcsy8")
+is_enabled = true
+update_interval = 1.0
 score_size = 0.5
 score_y_offset = 0.3
 query = NodePath("../Manny2/EQSQuery")

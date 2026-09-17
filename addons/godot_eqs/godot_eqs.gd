@@ -1,6 +1,7 @@
 @tool
 extends EditorPlugin
 
+# TODO: Add Dock in Debugger
 
 func _enter_tree():
 	# Initialization of the plugin goes here.

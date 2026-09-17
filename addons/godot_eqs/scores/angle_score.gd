@@ -11,7 +11,8 @@ func score(candidates: Array[EQSCandidate], context: EQSContext) -> void:
 		else context.target
 	)
 
-	if not context_point:
+	if context_point == null:
+		push_error("Context points are null.")
 		return
 
 	var forward := -context_point.global_basis.z

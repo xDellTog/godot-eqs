@@ -12,6 +12,10 @@ func score(candidates: Array[EQSCandidate], context: EQSContext) -> void:
 		else context.target
 	)
 
+	if context_position == null:
+		push_error("Context points are null.")
+		return
+
 	for candidate in candidates:
 		candidate.tested = true
 		

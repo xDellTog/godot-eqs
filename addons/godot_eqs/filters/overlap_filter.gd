@@ -6,6 +6,10 @@ class_name EQSOverlapFilter extends EQSFilter
 @export var bool_match := false
 
 func filter(candidates: Array[EQSCandidate], context: EQSContext) -> void:
+	if context.actor == null:
+		push_error("Context points are null.")
+		return
+
 	var space_state := context.actor.get_world_3d().direct_space_state
 
 	for candidate in candidates:

@@ -117,7 +117,10 @@ func _create_candidate_mesh(index: int, candidate: EQSCandidate, winner: EQSCand
 
 		if candidate.tested:
 			if not candidate.valid:
-				score.text = candidate.filtered_by.name
+				if candidate.filtered_by != null:
+					score.text = candidate.filtered_by.name
+				else:
+					score.text = "Filtered"
 			else:
 				if candidate == winner:
 					score.text = "%.2f ⭐" % candidate.score

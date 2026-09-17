@@ -12,4 +12,4 @@ var test_results := {}
 var score_results := {}
 
 func _init(_position: Vector3) -> void:
-    self.position = _position
+	self.position = _position
