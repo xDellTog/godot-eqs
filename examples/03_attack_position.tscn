@@ -30,6 +30,7 @@
 [ext_resource type="Script" uid="uid://v5wrvceqv34n" path="res://addons/godot_eqs/debugger/eqs_debugger.gd" id="27_vh86x"]
 [ext_resource type="Script" uid="uid://bob7qtn2iv7o7" path="res://examples/scripts/player_component.gd" id="28_hpugk"]
 [ext_resource type="Script" uid="uid://utd4a0dgpmce" path="res://examples/scripts/look_at_player.gd" id="28_nunu2"]
+[ext_resource type="VoxelGIData" uid="uid://e7nou35a7vyx" path="res://examples/03_attack_position.vgid.res" id="31_2mh0s"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_u7yhv"]
 panorama = ExtResource("1_yabwj")
@@ -512,10 +513,14 @@ transform = Transform3D(0.86602545, 0, 0.5, 0, 1, 0, -0.5, 0, 0.86602545, -1, 0.
 floor_max_angle = 0.80285144
 floor_snap_length = 2.0
 
-[node name="Manny2" parent="." unique_id=466487693 instance=ExtResource("19_dk4ot")]
+[node name="Manny2" parent="." unique_id=466487693 node_paths=PackedStringArray("eqs_query") instance=ExtResource("19_dk4ot")]
 transform = Transform3D(-0.8660252, 0, -0.50000006, 0, 1, 0, 0.50000006, 0, -0.8660252, 5, 0.5, -5.535898)
 floor_max_angle = 0.80285144
 floor_snap_length = 2.0
+eqs_query = NodePath("EQSQuery")
+
+[node name="NavigationAgent3D" parent="Manny2" index="4" unique_id=1615618877]
+avoidance_priority = 0.5
 
 [node name="EQSQuery" type="Node3D" parent="Manny2" unique_id=269269658]
 script = ExtResource("20_hsx7u")
@@ -573,10 +578,14 @@ autostart = true
 [node name="LookAtPlayer" type="Node" parent="Manny2" unique_id=1558476827]
 script = ExtResource("28_nunu2")
 
-[node name="Manny3" parent="." unique_id=2006926936 instance=ExtResource("19_dk4ot")]
+[node name="Manny3" parent="." unique_id=2006926936 node_paths=PackedStringArray("eqs_query") instance=ExtResource("19_dk4ot")]
 transform = Transform3D(-0.8660252, 0, -0.50000006, 0, 1, 0, 0.50000006, 0, -0.8660252, 1, 0.5, 4.464102)
 floor_max_angle = 0.80285144
 floor_snap_length = 2.0
+eqs_query = NodePath("EQSQuery")
+
+[node name="NavigationAgent3D" parent="Manny3" index="4" unique_id=1615618877]
+avoidance_priority = 0.5
 
 [node name="EQSQuery" type="Node3D" parent="Manny3" unique_id=1142953993]
 script = ExtResource("20_hsx7u")
@@ -637,6 +646,7 @@ script = ExtResource("28_nunu2")
 [node name="EQSDebugger" type="Node3D" parent="." unique_id=651871022 node_paths=PackedStringArray("query")]
 script = ExtResource("27_vh86x")
 is_enabled = true
+update_interval = 1.0
 score_size = 0.5
 score_y_offset = 0.3
 query = NodePath("../Manny2/EQSQuery")
@@ -653,7 +663,17 @@ player = NodePath("../Manny")
 camera = NodePath("../Camera3D")
 camera_offset = Vector3(15, 12, 15)
 
+[node name="VoxelGI" type="VoxelGI" parent="." unique_id=1040882774]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+subdiv = 2
+size = Vector3(37, 7, 37)
+data = ExtResource("31_2mh0s")
+
 [connection signal="finish_locomotion" from="Manny2" to="Manny2/LookAtPlayer" method="_on_manny_2_finish_locomotion"]
 [connection signal="timeout" from="Manny2/RunEQSQueryTimer" to="Manny2" method="_on_timer_timeout"]
 [connection signal="finish_locomotion" from="Manny3" to="Manny3/LookAtPlayer" method="_on_manny_2_finish_locomotion"]
 [connection signal="timeout" from="Manny3/RunEQSQueryTimer" to="Manny3" method="_on_timer_timeout"]
+
+[editable path="Manny"]
+[editable path="Manny2"]
+[editable path="Manny3"]

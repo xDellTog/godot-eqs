@@ -19,6 +19,9 @@ _data = {
 radius = 0.7
 height = 2.2
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_fb7th"]
+size = Vector3(1, 2.2, 1)
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h3df8"]
 animation = &"locomotion/Idle_B"
 
@@ -34,6 +37,8 @@ animation = &"locomotion/Idle_B"
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_hi0nk"]
 min_space = 0.0
 max_space = 2.0
+sync_mode = 3
+cyclic_length = 1.0
 blend_point_0/node = SubResource("AnimationNodeAnimation_78okc")
 blend_point_0/pos = 1.0
 blend_point_0/name = &"locomotion_Walking_B"
@@ -57,22 +62,26 @@ xfade_time = 0.25
 advance_mode = 2
 advance_condition = &"is_not_moving"
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_78okc"]
+advance_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_xr7lw"]
 states/Idle/node = SubResource("AnimationNodeAnimation_h3df8")
-states/Idle/position = Vector2(417.33334, 99.77777)
+states/Idle/position = Vector2(385.33334, 241.1111)
 states/Locomotion/node = SubResource("AnimationNodeBlendSpace1D_hi0nk")
 states/Locomotion/position = Vector2(627.99994, 100)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_0mq0q"), "Idle", "Locomotion", SubResource("AnimationNodeStateMachineTransition_w6wyu"), "Locomotion", "Idle", SubResource("AnimationNodeStateMachineTransition_68rhg")]
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_0mq0q"), "Idle", "Locomotion", SubResource("AnimationNodeStateMachineTransition_w6wyu"), "Locomotion", "Idle", SubResource("AnimationNodeStateMachineTransition_68rhg"), "Start", "Locomotion", SubResource("AnimationNodeStateMachineTransition_78okc")]
 graph_offset = Vector2(-402, -90)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_iy3pq"]
-graph_offset = Vector2(-892.8486, -40.545456)
+graph_offset = Vector2(-738.6667, -43.333332)
 nodes/Locomotion/node = SubResource("AnimationNodeStateMachine_xr7lw")
 nodes/Locomotion/position = Vector2(-66.666664, 66.666664)
 node_connections = [&"output", 0, &"Locomotion"]
 
 [node name="Manny" type="CharacterBody3D" unique_id=677890117]
 collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_78okc")
 
 [node name="Mannequin_Medium" parent="." unique_id=562382334 instance=ExtResource("2_rc0xt")]
@@ -83,13 +92,22 @@ libraries/locomotion = SubResource("AnimationLibrary_jjkhk")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1756403585]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
 shape = SubResource("CapsuleShape3D_iy3pq")
+disabled = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=982347572]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+shape = SubResource("BoxShape3D_fb7th")
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=1072882389]
 root_node = NodePath("../Mannequin_Medium")
 tree_root = SubResource("AnimationNodeBlendTree_iy3pq")
 anim_player = NodePath("../Mannequin_Medium/AnimationPlayer")
-parameters/Locomotion/conditions/is_moving = false
-parameters/Locomotion/conditions/is_not_moving = true
-parameters/Locomotion/Locomotion/blend_position = 0.0038548023
+parameters/Locomotion/conditions/is_moving = true
+parameters/Locomotion/conditions/is_not_moving = false
+parameters/Locomotion/Locomotion/blend_position = 0.0032123353
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1615618877]
+avoidance_enabled = true
+time_horizon_obstacles = 1.0
+max_speed = 5.0
+debug_enabled = true

@@ -502,10 +502,11 @@ transform = Transform3D(0.49999997, 0, 0.86602545, 0, 1, 0, -0.86602545, 0, 0.49
 floor_max_angle = 0.80285144
 floor_snap_length = 2.0
 
-[node name="Manny2" parent="." unique_id=466487693 instance=ExtResource("18_4n45k")]
+[node name="Manny2" parent="." unique_id=466487693 node_paths=PackedStringArray("eqs_query") instance=ExtResource("18_4n45k")]
 transform = Transform3D(0.99999994, 0, 8.940697e-08, 0, 1, 0, -8.940697e-08, 0, 0.99999994, 2, 0.5, 3.4641018)
 floor_max_angle = 0.80285144
 floor_snap_length = 2.0
+eqs_query = NodePath("EQSQuery")
 
 [node name="EQSQuery" type="Node3D" parent="Manny2" unique_id=269269658]
 script = ExtResource("19_pi3mm")
