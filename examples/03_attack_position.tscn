@@ -30,6 +30,8 @@
 [ext_resource type="Script" uid="uid://v5wrvceqv34n" path="res://addons/godot_eqs/debugger/eqs_debugger.gd" id="27_vh86x"]
 [ext_resource type="Script" uid="uid://bob7qtn2iv7o7" path="res://examples/scripts/player_component.gd" id="28_hpugk"]
 [ext_resource type="Script" uid="uid://utd4a0dgpmce" path="res://examples/scripts/look_at_player.gd" id="28_nunu2"]
+[ext_resource type="Script" uid="uid://dojs8m02eg6a1" path="res://addons/godot_eqs/filters/overlap_filter.gd" id="28_t7k53"]
+[ext_resource type="Script" uid="uid://7vvk3jdtmf10" path="res://addons/godot_eqs/scores/random_score.gd" id="29_12km7"]
 [ext_resource type="VoxelGIData" uid="uid://e7nou35a7vyx" path="res://examples/03_attack_position.vgid.res" id="31_2mh0s"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_u7yhv"]
@@ -41,7 +43,6 @@ sky_material = SubResource("PanoramaSkyMaterial_u7yhv")
 [sub_resource type="Environment" id="Environment_8cye3"]
 background_mode = 2
 sky = SubResource("Sky_i2t4f")
-tonemap_exposure = 0.8
 ssao_enabled = true
 ssil_enabled = true
 glow_enabled = true
@@ -509,67 +510,81 @@ transform = Transform3D(0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.70
 transform = Transform3D(0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.70710677, 12.8, 0.5, 9.97868)
 
 [node name="Manny" parent="." unique_id=677890117 instance=ExtResource("19_dk4ot")]
-transform = Transform3D(0.86602545, 0, 0.5, 0, 1, 0, -0.5, 0, 0.86602545, -1, 0.5, -4.535898)
+transform = Transform3D(0.57357633, 0, 0.8191521, 0, 1, 0, -0.8191521, 0, 0.57357633, -1, 0.5, -4.535898)
 floor_max_angle = 0.80285144
 floor_snap_length = 2.0
 
 [node name="Manny2" parent="." unique_id=466487693 node_paths=PackedStringArray("eqs_query") instance=ExtResource("19_dk4ot")]
-transform = Transform3D(-0.8660252, 0, -0.50000006, 0, 1, 0, 0.50000006, 0, -0.8660252, 5, 0.5, -5.535898)
+transform = Transform3D(-0.08715558, 0, -0.9961947, 0, 1, 0, 0.9961947, 0, -0.08715558, 6.061009, 0.5, -5.6332345)
 floor_max_angle = 0.80285144
 floor_snap_length = 2.0
-eqs_query = NodePath("EQSQuery")
+eqs_query = NodePath("EQSQuery2")
 
 [node name="NavigationAgent3D" parent="Manny2" index="4" unique_id=1615618877]
 avoidance_priority = 0.5
 
-[node name="EQSQuery" type="Node3D" parent="Manny2" unique_id=269269658]
+[node name="EQSQuery2" type="Node3D" parent="Manny2" unique_id=269269658]
 script = ExtResource("20_hsx7u")
 metadata/_custom_type_script = "uid://c1qfci66kb3qb"
 
-[node name="EQSContext" type="Node3D" parent="Manny2/EQSQuery" unique_id=1695946439 node_paths=PackedStringArray("actor", "target")]
+[node name="EQSContext" type="Node3D" parent="Manny2/EQSQuery2" unique_id=1695946439 node_paths=PackedStringArray("actor", "target")]
 script = ExtResource("21_tdyik")
 actor = NodePath("../../../Manny")
 target = NodePath("../..")
 metadata/_custom_type_script = "uid://cds5vo230nvf1"
 
-[node name="EQSCircleGenerator" type="Node3D" parent="Manny2/EQSQuery" unique_id=1471652547]
+[node name="EQSCircleGenerator" type="Node3D" parent="Manny2/EQSQuery2" unique_id=1471652547]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
 script = ExtResource("22_yabwj")
 radius = 7.0
 post_projection_vertical_offset = 0.5
 metadata/_custom_type_script = "uid://bxtrxb81o0ekk"
 
-[node name="EQSNavigationFilter" type="Node3D" parent="Manny2/EQSQuery" unique_id=1698916097]
+[node name="EQSNavigationFilter" type="Node3D" parent="Manny2/EQSQuery2" unique_id=1698916097]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
 script = ExtResource("23_e7ooj")
 metadata/_custom_type_script = "uid://br4pcsge0om0b"
 
-[node name="EQSLineOfSightFilter" type="Node3D" parent="Manny2/EQSQuery" unique_id=1402128714]
+[node name="EQSLineOfSightFilter" type="Node3D" parent="Manny2/EQSQuery2" unique_id=1402128714]
 transform = Transform3D(0.99999994, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 0.99999994, 0, 0, 0)
 script = ExtResource("25_qfkxf")
 from = 1
 metadata/_custom_type_script = "uid://dbj7mgse7t1gw"
 
-[node name="EQSDistanceFilter" type="Node3D" parent="Manny2/EQSQuery" unique_id=1468983250]
+[node name="EQSDistanceFilter" type="Node3D" parent="Manny2/EQSQuery2" unique_id=1468983250]
 script = ExtResource("26_yabwj")
 distance_to = 1
 min_distance = 3.0
 max_distance = 20.0
+is_enabled = false
 metadata/_custom_type_script = "uid://mac6tjt25sqt"
 
-[node name="EQSAngleScore" type="Node3D" parent="Manny2/EQSQuery" unique_id=1925626865]
+[node name="EQSOverlapFilter" type="Node3D" parent="Manny2/EQSQuery2" unique_id=1134103915]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
+script = ExtResource("28_t7k53")
+extent = Vector3(2, 1, 2)
+collision_layers = 2
+bool_match = true
+metadata/_custom_type_script = "uid://dojs8m02eg6a1"
+
+[node name="EQSAngleScore" type="Node3D" parent="Manny2/EQSQuery2" unique_id=1925626865]
 transform = Transform3D(0.9999999, 0, -1.4210855e-14, 0, 1, 0, 1.4210855e-14, 0, 0.9999999, 0, 0, 0)
 script = ExtResource("27_dq343")
-weight = 2.0
+weight = 2.5
 metadata/_custom_type_script = "uid://3qpow24qxusi"
 
-[node name="EQSDistanceScore" type="Node3D" parent="Manny2/EQSQuery" unique_id=1533735316]
+[node name="EQSDistanceScore" type="Node3D" parent="Manny2/EQSQuery2" unique_id=1533735316]
 transform = Transform3D(0.99999994, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 0.99999994, 0, 0, 0)
 script = ExtResource("26_2danr")
 distance_to = 1
 curve_distance = 20.0
 curve = SubResource("Curve_igswn")
 metadata/_custom_type_script = "uid://wm4kjtk8wj53"
+
+[node name="EQSRandomScore" type="Node3D" parent="Manny2/EQSQuery2" unique_id=606069166]
+script = ExtResource("29_12km7")
+weight = 2.0
+metadata/_custom_type_script = "uid://7vvk3jdtmf10"
 
 [node name="RunEQSQueryTimer" type="Timer" parent="Manny2" unique_id=841991607]
 wait_time = 5.0
@@ -579,62 +594,79 @@ autostart = true
 script = ExtResource("28_nunu2")
 
 [node name="Manny3" parent="." unique_id=2006926936 node_paths=PackedStringArray("eqs_query") instance=ExtResource("19_dk4ot")]
-transform = Transform3D(-0.8660252, 0, -0.50000006, 0, 1, 0, 0.50000006, 0, -0.8660252, 1, 0.5, 4.464102)
+transform = Transform3D(-0.9999999, 0, -1.4901161e-07, 0, 1, 0, 1.4901161e-07, 0, -0.9999999, -1.1920929e-07, 0.5, 2.7320514)
 floor_max_angle = 0.80285144
 floor_snap_length = 2.0
-eqs_query = NodePath("EQSQuery")
+eqs_query = NodePath("EQSQuery3")
+
+[node name="Mannequin_Medium" parent="Manny3" index="0" unique_id=562382334]
+transform = Transform3D(1.0000002, 0, -2.9802322e-08, 0, 1, 0, 2.9802322e-08, 0, 1.0000002, 0, 0, 0)
 
 [node name="NavigationAgent3D" parent="Manny3" index="4" unique_id=1615618877]
 avoidance_priority = 0.5
 
-[node name="EQSQuery" type="Node3D" parent="Manny3" unique_id=1142953993]
+[node name="EQSQuery3" type="Node3D" parent="Manny3" unique_id=1142953993]
 script = ExtResource("20_hsx7u")
 metadata/_custom_type_script = "uid://c1qfci66kb3qb"
 
-[node name="EQSContext" type="Node3D" parent="Manny3/EQSQuery" unique_id=481002855 node_paths=PackedStringArray("actor", "target")]
+[node name="EQSContext" type="Node3D" parent="Manny3/EQSQuery3" unique_id=481002855 node_paths=PackedStringArray("actor", "target")]
 script = ExtResource("21_tdyik")
 actor = NodePath("../../../Manny")
 target = NodePath("../..")
 metadata/_custom_type_script = "uid://cds5vo230nvf1"
 
-[node name="EQSCircleGenerator" type="Node3D" parent="Manny3/EQSQuery" unique_id=1610290643]
+[node name="EQSCircleGenerator" type="Node3D" parent="Manny3/EQSQuery3" unique_id=1610290643]
 transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
 script = ExtResource("22_yabwj")
 radius = 7.0
 post_projection_vertical_offset = 0.5
 metadata/_custom_type_script = "uid://bxtrxb81o0ekk"
 
-[node name="EQSNavigationFilter" type="Node3D" parent="Manny3/EQSQuery" unique_id=1591402666]
+[node name="EQSNavigationFilter" type="Node3D" parent="Manny3/EQSQuery3" unique_id=1591402666]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
 script = ExtResource("23_e7ooj")
 metadata/_custom_type_script = "uid://br4pcsge0om0b"
 
-[node name="EQSLineOfSightFilter" type="Node3D" parent="Manny3/EQSQuery" unique_id=1865009]
+[node name="EQSLineOfSightFilter" type="Node3D" parent="Manny3/EQSQuery3" unique_id=1865009]
 transform = Transform3D(0.99999994, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 0.99999994, 0, 0, 0)
 script = ExtResource("25_qfkxf")
 from = 1
 metadata/_custom_type_script = "uid://dbj7mgse7t1gw"
 
-[node name="EQSDistanceFilter" type="Node3D" parent="Manny3/EQSQuery" unique_id=657226135]
+[node name="EQSDistanceFilter" type="Node3D" parent="Manny3/EQSQuery3" unique_id=657226135]
 script = ExtResource("26_yabwj")
 distance_to = 1
 min_distance = 3.0
 max_distance = 20.0
+is_enabled = false
 metadata/_custom_type_script = "uid://mac6tjt25sqt"
 
-[node name="EQSAngleScore" type="Node3D" parent="Manny3/EQSQuery" unique_id=1066210463]
+[node name="EQSOverlapFilter" type="Node3D" parent="Manny3/EQSQuery3" unique_id=236532076]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
+script = ExtResource("28_t7k53")
+extent = Vector3(2, 1, 2)
+collision_layers = 2
+bool_match = true
+metadata/_custom_type_script = "uid://dojs8m02eg6a1"
+
+[node name="EQSAngleScore" type="Node3D" parent="Manny3/EQSQuery3" unique_id=1066210463]
 transform = Transform3D(0.9999999, 0, -1.4210855e-14, 0, 1, 0, 1.4210855e-14, 0, 0.9999999, 0, 0, 0)
 script = ExtResource("27_dq343")
-weight = 2.0
+weight = 2.5
 metadata/_custom_type_script = "uid://3qpow24qxusi"
 
-[node name="EQSDistanceScore" type="Node3D" parent="Manny3/EQSQuery" unique_id=1785361689]
+[node name="EQSDistanceScore" type="Node3D" parent="Manny3/EQSQuery3" unique_id=1785361689]
 transform = Transform3D(0.99999994, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 0.99999994, 0, 0, 0)
 script = ExtResource("26_2danr")
 distance_to = 1
 curve_distance = 20.0
 curve = SubResource("Curve_igswn")
 metadata/_custom_type_script = "uid://wm4kjtk8wj53"
+
+[node name="EQSRandomScore" type="Node3D" parent="Manny3/EQSQuery3" unique_id=1211665135]
+script = ExtResource("29_12km7")
+weight = 2.0
+metadata/_custom_type_script = "uid://7vvk3jdtmf10"
 
 [node name="RunEQSQueryTimer" type="Timer" parent="Manny3" unique_id=1938619781]
 wait_time = 3.0
@@ -643,13 +675,20 @@ autostart = true
 [node name="LookAtPlayer" type="Node" parent="Manny3" unique_id=13651685]
 script = ExtResource("28_nunu2")
 
-[node name="EQSDebugger" type="Node3D" parent="." unique_id=651871022 node_paths=PackedStringArray("query")]
+[node name="EQSDebugger2" type="Node3D" parent="." unique_id=651871022 node_paths=PackedStringArray("query")]
 script = ExtResource("27_vh86x")
-is_enabled = true
 update_interval = 1.0
 score_size = 0.5
 score_y_offset = 0.3
-query = NodePath("../Manny2/EQSQuery")
+query = NodePath("../Manny2/EQSQuery2")
+metadata/_custom_type_script = "uid://v5wrvceqv34n"
+
+[node name="EQSDebugger3" type="Node3D" parent="." unique_id=1196708292 node_paths=PackedStringArray("query")]
+script = ExtResource("27_vh86x")
+update_interval = 1.0
+score_size = 0.5
+score_y_offset = 0.3
+query = NodePath("../Manny3/EQSQuery3")
 metadata/_custom_type_script = "uid://v5wrvceqv34n"
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=8630562]

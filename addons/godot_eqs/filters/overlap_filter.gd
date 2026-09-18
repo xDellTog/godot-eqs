@@ -27,10 +27,11 @@ func filter(candidates: Array[EQSCandidate], context: EQSContext) -> void:
 		query.collision_mask = collision_layers
 		query.collide_with_bodies = true
 		query.collide_with_areas = false
+		query.exclude = [context.target]
 
 		var results := space_state.intersect_shape(query, 1)
 
-		var is_overlap = results.is_empty()
+		var is_overlap = not results.is_empty()
 
 		if bool_match:
 			is_overlap = !is_overlap
