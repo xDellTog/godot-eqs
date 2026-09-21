@@ -110,3 +110,4 @@ parameters/Locomotion/Locomotion/blend_position = 0.0032123353
 avoidance_enabled = true
 time_horizon_obstacles = 1.0
 max_speed = 5.0
+debug_enabled = true

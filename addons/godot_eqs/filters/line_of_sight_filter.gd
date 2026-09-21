@@ -11,13 +11,8 @@ func filter(candidates: Array[EQSCandidate], context: EQSContext) -> void:
 		context.actor if from == EQSContext.Point.context_actor
 		else context.target
 	)
-
-	var context_to_position = (
-		context.target if from == EQSContext.Point.context_actor
-		else context.actor
-	)
  	
-	if context_from_position == null or context_to_position == null:
+	if context_from_position == null:
 		push_error("Context points are null.")
 		return
 
@@ -29,7 +24,7 @@ func filter(candidates: Array[EQSCandidate], context: EQSContext) -> void:
 		if not candidate.valid:
 			continue
 			
-		var point_of_view = context_to_position.global_position + Vector3.UP * point_of_view_height
+		var point_of_view = context_from_position.global_position + Vector3.UP * point_of_view_height
 		var query := PhysicsRayQueryParameters3D.create(candidate.position, point_of_view, collision_mask)
 		
 		query.exclude = [context_from_position]

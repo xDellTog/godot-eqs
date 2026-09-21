@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="godot-eqs"
-run/main_scene="uid://chydhb61m3124"
+run/main_scene="uid://cyx65x88ficfv"
 config/features=PackedStringArray("4.7", "Forward Plus")
+
+[autoload]
+
+BeehaveGlobalMetrics="*uid://c3ktl6ontsdt7"
+BeehaveGlobalDebugger="*uid://bl3ma400hpvsh"
 
 [display]
 
@@ -24,7 +29,11 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_eqs/plugin.cfg")
+enabled=PackedStringArray("res://addons/beehave/plugin.cfg", "res://addons/godot_eqs/plugin.cfg")
+
+[global_group]
+
+player=""
 
 [layer_names]
 

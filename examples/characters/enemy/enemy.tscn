@@ -1,0 +1,278 @@
+[gd_scene format=3 uid="uid://c1lj4ciq6xrpu"]
+
+[ext_resource type="Script" uid="uid://qnu1dpnaa0i4" path="res://examples/characters/enemy/enemy.gd" id="1_tnqm8"]
+[ext_resource type="PackedScene" uid="uid://pst3md2p7sfx" path="res://examples/characters/enemy/Skeleton_Minion.glb" id="1_xgwcm"]
+[ext_resource type="AnimationLibrary" uid="uid://cg7upmymalcfr" path="res://examples/characters/animations/Rig_Medium_CombatRanged.glb" id="2_8sdby"]
+[ext_resource type="PackedScene" uid="uid://cvos7pdafbqq7" path="res://examples/characters/enemy/arrow.tscn" id="2_s5pxt"]
+[ext_resource type="AnimationLibrary" uid="uid://ch6p73ta6k1tj" path="res://examples/characters/animations/Rig_Medium_General.glb" id="3_tnqm8"]
+[ext_resource type="AnimationLibrary" uid="uid://kwkt2bcsttii" path="res://examples/characters/animations/Rig_Medium_MovementBasic.glb" id="4_km3kn"]
+[ext_resource type="Script" uid="uid://bb0t2ovl7wifo" path="res://addons/beehave/nodes/beehave_tree.gd" id="6_dbp55"]
+[ext_resource type="Script" uid="uid://cw22yurt5l74k" path="res://addons/beehave/nodes/composites/selector_reactive.gd" id="7_fj3ol"]
+[ext_resource type="Script" uid="uid://cg016dbe7gs1x" path="res://addons/beehave/nodes/composites/sequence.gd" id="8_rxn5x"]
+[ext_resource type="Script" uid="uid://d0e2ss8rtg2hd" path="res://examples/characters/enemy/was_hit.gd" id="9_i2a1d"]
+[ext_resource type="Script" uid="uid://yq2hwk7txwik" path="res://examples/characters/enemy/run_eqs_query.gd" id="10_2vvlw"]
+[ext_resource type="Script" uid="uid://ce4m4jnpfhgc2" path="res://examples/characters/enemy/move_to_key.gd" id="11_gow3a"]
+[ext_resource type="Script" uid="uid://coq5icd8ofx2l" path="res://examples/characters/enemy/hide_in_cover.gd" id="12_vugr7"]
+[ext_resource type="Script" uid="uid://b3vy5wukel877" path="res://examples/characters/enemy/acquire_target.gd" id="13_us2o6"]
+[ext_resource type="Script" uid="uid://dmxislgd8nn6r" path="res://examples/characters/enemy/shoot_target.gd" id="14_5uevj"]
+[ext_resource type="Script" uid="uid://v5wrvceqv34n" path="res://addons/godot_eqs/debugger/eqs_debugger.gd" id="15_rjwmp"]
+[ext_resource type="Script" uid="uid://c1qfci66kb3qb" path="res://addons/godot_eqs/core/eqs_query.gd" id="16_j6b7j"]
+[ext_resource type="Script" uid="uid://cds5vo230nvf1" path="res://addons/godot_eqs/core/eqs_context.gd" id="17_s5pxt"]
+[ext_resource type="Script" uid="uid://bxtrxb81o0ekk" path="res://addons/godot_eqs/generators/circle_generator.gd" id="18_6rslg"]
+[ext_resource type="Script" uid="uid://br4pcsge0om0b" path="res://addons/godot_eqs/filters/navigation_filter.gd" id="19_f7f1g"]
+[ext_resource type="Script" uid="uid://dbj7mgse7t1gw" path="res://addons/godot_eqs/filters/line_of_sight_filter.gd" id="20_rfgov"]
+[ext_resource type="Script" uid="uid://mac6tjt25sqt" path="res://addons/godot_eqs/filters/distance_filter.gd" id="21_ixfe4"]
+[ext_resource type="Script" uid="uid://dojs8m02eg6a1" path="res://addons/godot_eqs/filters/overlap_filter.gd" id="22_xyb5q"]
+[ext_resource type="Script" uid="uid://3qpow24qxusi" path="res://addons/godot_eqs/scores/angle_score.gd" id="23_g60pm"]
+[ext_resource type="Script" uid="uid://wm4kjtk8wj53" path="res://addons/godot_eqs/scores/distance_score.gd" id="24_5ynx8"]
+[ext_resource type="Script" uid="uid://7vvk3jdtmf10" path="res://addons/godot_eqs/scores/random_score.gd" id="25_tp53n"]
+[ext_resource type="Script" uid="uid://bcjruulampd33" path="res://addons/godot_eqs/generators/grid_generator.gd" id="26_j6b7j"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iy3pq"]
+radius = 0.6
+height = 2.2
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8sdby"]
+animation = &"Rig_Medium_General/Idle_A"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tnqm8"]
+animation = &"Rig_Medium_MovementBasic/Walking_A"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_km3kn"]
+animation = &"Rig_Medium_MovementBasic/Running_A"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_a055b"]
+max_space = 2.0
+sync_mode = 2
+blend_point_0/node = SubResource("AnimationNodeAnimation_8sdby")
+blend_point_0/pos = 0.0
+blend_point_0/name = &"Rig_Medium_General_Idle_A"
+blend_point_1/node = SubResource("AnimationNodeAnimation_tnqm8")
+blend_point_1/pos = 1.0
+blend_point_1/name = &"Rig_Medium_MovementBasic_Walking_A"
+blend_point_2/node = SubResource("AnimationNodeAnimation_km3kn")
+blend_point_2/pos = 2.0
+blend_point_2/name = &"Rig_Medium_MovementBasic_Running_A"
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_8sdby"]
+graph_offset = Vector2(-767.3333, -79.333336)
+nodes/Locomotion/node = SubResource("AnimationNodeBlendSpace1D_a055b")
+nodes/Locomotion/position = Vector2(0, 80)
+node_connections = [&"output", 0, &"Locomotion"]
+
+[sub_resource type="Curve" id="Curve_rjwmp"]
+_data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_s5pxt"]
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
+[node name="Enemy" type="CharacterBody3D" unique_id=1574864131 node_paths=PackedStringArray("muzzle")]
+collision_layer = 2
+script = ExtResource("1_tnqm8")
+muzzle = NodePath("Muzzle")
+projectile_scene = ExtResource("2_s5pxt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=396016903]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+shape = SubResource("CapsuleShape3D_iy3pq")
+
+[node name="Skeleton_Minion" parent="." unique_id=1543541536 instance=ExtResource("1_xgwcm")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Skeleton_Minion" unique_id=1097019096]
+libraries/Rig_Medium_CombatRanged = ExtResource("2_8sdby")
+libraries/Rig_Medium_General = ExtResource("3_tnqm8")
+libraries/Rig_Medium_MovementBasic = ExtResource("4_km3kn")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=637802152]
+root_node = NodePath("../Skeleton_Minion")
+tree_root = SubResource("AnimationNodeBlendTree_8sdby")
+anim_player = NodePath("../Skeleton_Minion/AnimationPlayer")
+parameters/Locomotion/blend_position = 0.001335144
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=999320187]
+avoidance_enabled = true
+radius = 0.6
+debug_enabled = true
+
+[node name="BeehaveTree" type="Node" parent="." unique_id=1901651940 node_paths=PackedStringArray("blackboard", "actor")]
+script = ExtResource("6_dbp55")
+blackboard = NodePath("@Node@24182")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
+
+[node name="SelectorReactiveComposite" type="Node" parent="BeehaveTree" unique_id=2143182244]
+script = ExtResource("7_fj3ol")
+metadata/_custom_type_script = "uid://cw22yurt5l74k"
+
+[node name="ReceiveDamage" type="Node" parent="BeehaveTree/SelectorReactiveComposite" unique_id=1413704228]
+script = ExtResource("8_rxn5x")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="WasHit" type="Node" parent="BeehaveTree/SelectorReactiveComposite/ReceiveDamage" unique_id=906481833]
+script = ExtResource("9_i2a1d")
+metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="RunEQSQuery" type="Node" parent="BeehaveTree/SelectorReactiveComposite/ReceiveDamage" unique_id=1773190341 node_paths=PackedStringArray("query")]
+script = ExtResource("10_2vvlw")
+query = NodePath("../../../../CoverPositionQuery")
+result_key = &"cover_pos"
+consume_was_hit = true
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="MoveToKey" type="Node" parent="BeehaveTree/SelectorReactiveComposite/ReceiveDamage" unique_id=714901214]
+script = ExtResource("11_gow3a")
+position_key = &"cover_pos"
+tolerance = 1.5
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="HideInCover" type="Node" parent="BeehaveTree/SelectorReactiveComposite/ReceiveDamage" unique_id=2017377529]
+script = ExtResource("12_vugr7")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="Attack" type="Node" parent="BeehaveTree/SelectorReactiveComposite" unique_id=1231462332]
+script = ExtResource("8_rxn5x")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="AcquireTarget" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Attack" unique_id=1192327917]
+script = ExtResource("13_us2o6")
+metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="RunEQSQuery" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Attack" unique_id=732805952 node_paths=PackedStringArray("query")]
+script = ExtResource("10_2vvlw")
+query = NodePath("../../../../AttackPositionQuery")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="MoveToKey" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Attack" unique_id=259034836]
+script = ExtResource("11_gow3a")
+tolerance = 1.5
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="ShootTarget" type="Node" parent="BeehaveTree/SelectorReactiveComposite/Attack" unique_id=420266436]
+script = ExtResource("14_5uevj")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="EQSDebugger" type="Node3D" parent="." unique_id=379011879 node_paths=PackedStringArray("query")]
+script = ExtResource("15_rjwmp")
+is_enabled = true
+update_interval = 1.0
+score_size = 0.5
+score_y_offset = 0.3
+query = NodePath("../AttackPositionQuery")
+metadata/_custom_type_script = "uid://v5wrvceqv34n"
+
+[node name="AttackPositionQuery" type="Node3D" parent="." unique_id=714919893]
+script = ExtResource("16_j6b7j")
+metadata/_custom_type_script = "uid://c1qfci66kb3qb"
+
+[node name="EQSContext" type="Node3D" parent="AttackPositionQuery" unique_id=929479636 node_paths=PackedStringArray("actor")]
+script = ExtResource("17_s5pxt")
+actor = NodePath("../..")
+metadata/_custom_type_script = "uid://cds5vo230nvf1"
+
+[node name="EQSCircleGenerator" type="Node3D" parent="AttackPositionQuery" unique_id=1027352076]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+script = ExtResource("18_6rslg")
+radius = 7.0
+post_projection_vertical_offset = 0.5
+metadata/_custom_type_script = "uid://bxtrxb81o0ekk"
+
+[node name="EQSNavigationFilter" type="Node3D" parent="AttackPositionQuery" unique_id=2076037759]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
+script = ExtResource("19_f7f1g")
+is_enabled = false
+metadata/_custom_type_script = "uid://br4pcsge0om0b"
+
+[node name="EQSLineOfSightFilter" type="Node3D" parent="AttackPositionQuery" unique_id=1281119200]
+transform = Transform3D(0.99999994, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 0.99999994, 0, 0, 0)
+script = ExtResource("20_rfgov")
+from = 1
+is_enabled = false
+metadata/_custom_type_script = "uid://dbj7mgse7t1gw"
+
+[node name="EQSDistanceFilter" type="Node3D" parent="AttackPositionQuery" unique_id=2141682832]
+script = ExtResource("21_ixfe4")
+distance_to = 1
+min_distance = 3.0
+max_distance = 20.0
+is_enabled = false
+metadata/_custom_type_script = "uid://mac6tjt25sqt"
+
+[node name="EQSOverlapFilter" type="Node3D" parent="AttackPositionQuery" unique_id=443658353]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0, 0)
+script = ExtResource("22_xyb5q")
+extent = Vector3(2, 1, 2)
+collision_layers = 2
+bool_match = true
+is_enabled = false
+metadata/_custom_type_script = "uid://dojs8m02eg6a1"
+
+[node name="EQSAngleScore" type="Node3D" parent="AttackPositionQuery" unique_id=1224294478]
+transform = Transform3D(0.9999999, 0, -1.4210855e-14, 0, 1, 0, 1.4210855e-14, 0, 0.9999999, 0, 0, 0)
+script = ExtResource("23_g60pm")
+weight = 2.5
+is_enabled = false
+metadata/_custom_type_script = "uid://3qpow24qxusi"
+
+[node name="EQSDistanceScore" type="Node3D" parent="AttackPositionQuery" unique_id=663267868]
+transform = Transform3D(0.99999994, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 0.99999994, 0, 0, 0)
+script = ExtResource("24_5ynx8")
+distance_to = 1
+curve_distance = 20.0
+curve = SubResource("Curve_rjwmp")
+metadata/_custom_type_script = "uid://wm4kjtk8wj53"
+
+[node name="EQSRandomScore" type="Node3D" parent="AttackPositionQuery" unique_id=2089629858]
+script = ExtResource("25_tp53n")
+weight = 2.0
+is_enabled = false
+metadata/_custom_type_script = "uid://7vvk3jdtmf10"
+
+[node name="CoverPositionQuery" type="Node3D" parent="." unique_id=327280209]
+script = ExtResource("16_j6b7j")
+metadata/_custom_type_script = "uid://c1qfci66kb3qb"
+
+[node name="EQSContext" type="Node3D" parent="CoverPositionQuery" unique_id=1178516207 node_paths=PackedStringArray("actor")]
+script = ExtResource("17_s5pxt")
+actor = NodePath("../..")
+metadata/_custom_type_script = "uid://cds5vo230nvf1"
+
+[node name="EQSGridGenerator" type="Node3D" parent="CoverPositionQuery" unique_id=1671330699]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+script = ExtResource("26_j6b7j")
+size = 20.0
+spacing = 3.0
+post_projection_vertical_offset = 0.5
+metadata/_custom_type_script = "uid://bcjruulampd33"
+
+[node name="EQSNavigationFilter" type="Node3D" parent="CoverPositionQuery" unique_id=993670301]
+transform = Transform3D(0.99999994, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 0.99999994, 0, 0, 0)
+script = ExtResource("19_f7f1g")
+max_path_length = 20.0
+is_enabled = false
+metadata/_custom_type_script = "uid://br4pcsge0om0b"
+
+[node name="EQSOverlapFilter" type="Node3D" parent="CoverPositionQuery" unique_id=1621592213]
+transform = Transform3D(0.99999994, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 0.99999994, 0, 0, 0)
+script = ExtResource("22_xyb5q")
+extent = Vector3(2, 0.2, 2)
+is_enabled = false
+metadata/_custom_type_script = "uid://dojs8m02eg6a1"
+
+[node name="EQSLineOfSightFilter" type="Node3D" parent="CoverPositionQuery" unique_id=1565415129]
+transform = Transform3D(0.99999994, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 0.99999994, 0, 0, 0)
+script = ExtResource("20_rfgov")
+bool_match = true
+is_enabled = false
+metadata/_custom_type_script = "uid://dbj7mgse7t1gw"
+
+[node name="EQSDistanceScore" type="Node3D" parent="CoverPositionQuery" unique_id=495201304]
+script = ExtResource("24_5ynx8")
+curve_distance = 20.0
+curve = SubResource("Curve_s5pxt")
+metadata/_custom_type_script = "uid://wm4kjtk8wj53"
+
+[node name="Muzzle" type="Marker3D" parent="." unique_id=43308334]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)

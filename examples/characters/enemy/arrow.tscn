@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cvos7pdafbqq7"]
+
+[ext_resource type="Script" uid="uid://c5riegrn2qrhn" path="res://examples/characters/enemy/arrow.gd" id="1_nbxp2"]
+[ext_resource type="PackedScene" uid="uid://cpwwb5lg8v11m" path="res://examples/characters/enemy/Skeleton_Arrow.fbx" id="1_v4ifj"]
+
+[node name="Arrow" type="RayCast3D" unique_id=34676455]
+target_position = Vector3(0, 0, -1)
+script = ExtResource("1_nbxp2")
+
+[node name="Skeleton_Arrow" parent="." unique_id=74167537 instance=ExtResource("1_v4ifj")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.3)
+
+[node name="Timer" type="Timer" parent="." unique_id=92105278]
+wait_time = 30.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
