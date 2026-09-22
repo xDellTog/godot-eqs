@@ -68,7 +68,7 @@ func handle_ai_locomotion(delta):
 
 	var next_position := navigation_agent.get_next_path_position()
 	var direction := global_position.direction_to(next_position)
-	rotation.y = lerp_angle(rotation.y, atan2(direction.x, direction.z), delta * ROTATION_SPEED)
+	rotation.y = lerp_angle(rotation.y, atan2(-direction.x, -direction.z), delta * ROTATION_SPEED)
 	# if not is_on_floor():
 	# 	new_velocity += get_gravity() * delta
 

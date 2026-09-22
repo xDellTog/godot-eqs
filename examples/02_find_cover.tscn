@@ -514,7 +514,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.5, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.5, 0)
 
 [node name="Manny" parent="." unique_id=677890117 instance=ExtResource("18_4n45k")]
-transform = Transform3D(0.49999997, 0, 0.86602545, 0, 1, 0, -0.86602545, 0, 0.49999997, -1, 0.5, -3.5358982)
+transform = Transform3D(0.49999997, 0, 0.86602545, 0, 1, 0, -0.86602545, 0, 0.49999997, 0, 0.5, -3.5358982)
 floor_max_angle = 0.80285144
 floor_snap_length = 2.0
 
@@ -557,6 +557,7 @@ metadata/_custom_type_script = "uid://dojs8m02eg6a1"
 [node name="EQSLineOfSightFilter" type="Node3D" parent="Manny2/EQSQuery" unique_id=1402128714]
 transform = Transform3D(0.99999994, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 0.99999994, 0, 0, 0)
 script = ExtResource("23_ygni4")
+from = 1
 bool_match = true
 metadata/_custom_type_script = "uid://dbj7mgse7t1gw"
 

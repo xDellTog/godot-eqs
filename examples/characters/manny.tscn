@@ -85,6 +85,7 @@ collision_mask = 2
 script = ExtResource("1_78okc")
 
 [node name="Mannequin_Medium" parent="." unique_id=562382334 instance=ExtResource("2_rc0xt")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Mannequin_Medium" unique_id=2014104982]
 libraries/locomotion = SubResource("AnimationLibrary_jjkhk")
