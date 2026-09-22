@@ -18,14 +18,12 @@ var safe_velocity: Vector3
 @export var sight_range := 30.0
 @export_range(10.0, 360.0) var sight_fov_deg := 110.0
 @export_flags_3d_physics var sight_mask := 1
-
-
+ 
 @export var muzzle: Node3D
 @export var fire_interval := 0.8
 @export var projectile_scene: PackedScene
 var _last_shot_ms := 0
-
-# signal finish_locomotion()
+ 
 
 func _ready() -> void:
 	navigation_agent.velocity_computed.connect(Callable(_on_navigation_agent_3d_velocity_computed))
@@ -68,70 +66,54 @@ func face_toward(point: Vector3) -> void:
 	var flat := Vector3(point.x, global_position.y, point.z)
 	if flat.distance_squared_to(global_position) > 0.001:
 		look_at(flat, Vector3.UP)
-
-# func handle_ai_rotation(delta):
-# 	if not is_moving:
-# 		var next_position := navigation_agent.get_next_path_position()
-# 		var direction := next_position.direction_to(global_position)
-# 		rotation.y = lerp_angle(rotation.y, atan2(direction.x, direction.z), delta * ROTATION_SPEED)
-
+ 
 
 func handle_ai_locomotion(delta):
 	if not is_on_floor():
 		velocity.y += get_gravity().y * delta
+		move_and_slide()
 	else:
 		velocity.y = 0.0
 
 	var move_amount = clampf(abs(velocity.x) + abs(velocity.z), 0, 2)
 	animation_tree.set("parameters/Locomotion/blend_position", snapped(move_amount, .5))
 
-# 	var desired_velocity := Vector3.ZERO
-# 	if is_on_floor():
-# 		if navigation_agent.is_navigation_finished():
-# 			if is_moving:
-# 				finish_locomotion.emit()
-# 			is_moving = false
-# 		else:
-# 			handle_ai_rotation(delta)
-			
-# 			var next_position := navigation_agent.get_next_path_position()
-# 			var direction := global_position.direction_to(next_position)
-# 			desired_velocity = Vector3(direction.x, 0, direction.z).normalized() * navigation_agent.max_speed
-# 			is_moving = true
-	
-# 	navigation_agent.velocity = desired_velocity
-	
-# 	velocity.x = safe_velocity.x
-# 	velocity.z = safe_velocity.z
 
-# 	var move_amount = clampf(abs(velocity.x) + abs(velocity.z), 0, 2)
-# 	animation_tree.set("parameters/Locomotion/blend_position", snapped(move_amount, .5))
-
-# 	move_and_slide()
+func apply_impulse(impulse: Vector3):
+	velocity += impulse
+	move_and_slide()
 
 	
 func _on_navigation_agent_3d_velocity_computed(_safe_velocity: Vector3) -> void:
 	safe_velocity = _safe_velocity
  
+
 func move_to_point(point: Vector3, tolerance := 1.0) -> bool:
 	if global_position.distance_to(point) <= tolerance:
+		navigation_agent.velocity = Vector3.ZERO
 		velocity = Vector3.ZERO
 		return true
  
 	navigation_agent.target_position = point
 	if navigation_agent.is_navigation_finished():
+		navigation_agent.velocity = Vector3.ZERO
+		velocity = Vector3.ZERO
 		return true
 		
-	var dir := navigation_agent.get_next_path_position() - global_position
-	dir.y = 0.0
-	dir = dir.normalized()
-	velocity.x = dir.x * navigation_agent.max_speed
-	velocity.z = dir.z * navigation_agent.max_speed
+	var direction := navigation_agent.get_next_path_position() - global_position
+	direction.y = 0.0
+	var desired_velocity = direction.normalized() * navigation_agent.max_speed
 
-	face_toward(global_position + dir)
+	navigation_agent.velocity = desired_velocity
+
+	velocity.x = safe_velocity.x
+	velocity.z = safe_velocity.z
+
+	face_toward(global_position + direction)
 
 	move_and_slide()
 	return false
+
 
 func try_shoot(target: Node3D) -> void:
 	var now := Time.get_ticks_msec()
@@ -142,8 +124,8 @@ func try_shoot(target: Node3D) -> void:
 	if projectile_scene == null:
 		return
 
-	
-	var p := projectile_scene.instantiate() as Node3D
+	var p := projectile_scene.instantiate() as Arrow
 	get_tree().current_scene.add_child(p)
 	p.global_position = muzzle.global_position
 	p.look_at(target.global_position + Vector3.UP, Vector3.UP)
+	p.source = self

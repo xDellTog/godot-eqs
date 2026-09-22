@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dt8whpln44u4r" path="res://examples/characters/player/player.gd" id="1_g5l2n"]
 [ext_resource type="PackedScene" uid="uid://bunv36ig6ln2f" path="res://examples/characters/player/Rogue_Hooded.glb" id="1_hl4bg"]
 [ext_resource type="AnimationLibrary" uid="uid://cg7upmymalcfr" path="res://examples/characters/animations/Rig_Medium_CombatRanged.glb" id="2_b6ewv"]
+[ext_resource type="PackedScene" uid="uid://cvos7pdafbqq7" path="res://examples/characters/enemy/arrow.tscn" id="2_ybc4a"]
 [ext_resource type="AnimationLibrary" uid="uid://ch6p73ta6k1tj" path="res://examples/characters/animations/Rig_Medium_General.glb" id="3_g5l2n"]
 [ext_resource type="AnimationLibrary" uid="uid://c2dw1wgp0d6js" path="res://examples/characters/animations/Rig_Medium_MovementAdvanced.glb" id="4_ybc4a"]
 [ext_resource type="AnimationLibrary" uid="uid://kwkt2bcsttii" path="res://examples/characters/animations/Rig_Medium_MovementBasic.glb" id="5_fj7k2"]
@@ -40,9 +41,12 @@ node_connections = [&"output", 0, &"Locomotion"]
 radius = 0.6
 height = 2.2
 
-[node name="Player" type="CharacterBody3D" unique_id=152202584 groups=["player"]]
+[node name="Player" type="CharacterBody3D" unique_id=152202584 node_paths=PackedStringArray("muzzle") groups=["Player"]]
+collision_layer = 2
 floor_max_angle = 0.80285144
 script = ExtResource("1_g5l2n")
+muzzle = NodePath("Muzzle")
+projectile_scene = ExtResource("2_ybc4a")
 
 [node name="AnimationTree" type="AnimationTree" parent="." unique_id=1645239928]
 root_node = NodePath("../Rogue_Hooded")
@@ -67,3 +71,6 @@ shape = SubResource("CapsuleShape3D_b6ewv")
 avoidance_enabled = true
 radius = 0.6
 debug_enabled = true
+
+[node name="Muzzle" type="Marker3D" parent="." unique_id=2091933552]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)

@@ -33,7 +33,8 @@ enabled=PackedStringArray("res://addons/beehave/plugin.cfg", "res://addons/godot
 
 [global_group]
 
-player=""
+Player=""
+Enemy=""
 
 [layer_names]
 

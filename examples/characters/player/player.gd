@@ -5,21 +5,37 @@ class_name Player extends CharacterBody3D
 
 var is_moving := false
 
-const ROTATION_SPEED = 15.0
+const ROTATION_SPEED = 50.0
 const SPEED = 6.0
 
 var safe_velocity: Vector3
+
+@export var health := 100.0
+@export var max_health := 100.0
+
+@export var muzzle: Node3D
+@export var fire_interval := 0.8
+@export var projectile_scene: PackedScene
+var _last_shot_ms := 0
 
 signal finish_locomotion()
 
 func _ready() -> void:
 	navigation_agent.velocity_computed.connect(Callable(_on_navigation_agent_3d_velocity_computed))
 	navigation_agent.max_speed = SPEED
+	health = max_health
 
 
 func _physics_process(delta: float) -> void:
 	handle_ai_locomotion(delta)
 	
+
+func take_damage(amount: float) -> void:
+	health -= amount
+	if health <= 0.0:
+		queue_free()
+		return
+
 
 func set_target_position(target_position: Vector3):
 	var map := get_world_3d().navigation_map
@@ -31,6 +47,11 @@ func handle_ai_rotation(delta):
 	var next_position := navigation_agent.get_next_path_position()
 	var direction := next_position.direction_to(global_position)
 	rotation.y = lerp_angle(rotation.y, atan2(direction.x, direction.z), delta * ROTATION_SPEED)
+
+
+func apply_impulse(impulse: Vector3):
+	velocity += impulse
+	move_and_slide()
 
 
 func handle_ai_locomotion(delta):
@@ -66,3 +87,19 @@ func handle_ai_locomotion(delta):
 	
 func _on_navigation_agent_3d_velocity_computed(_safe_velocity: Vector3) -> void:
 	safe_velocity = _safe_velocity
+
+
+func try_shoot() -> void:
+	var now := Time.get_ticks_msec()
+	if now - _last_shot_ms < int(fire_interval * 1000.0):
+		return
+
+	_last_shot_ms = now
+	if projectile_scene == null:
+		return
+	
+	var p := projectile_scene.instantiate() as Arrow
+	get_tree().current_scene.add_child(p)
+	p.global_position = muzzle.global_position
+	p.global_basis = muzzle.global_basis
+	p.source = self

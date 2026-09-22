@@ -20,4 +20,5 @@ func tick(_actor: Node, blackboard: Blackboard) -> int:
 	if blackboard.has_value("attack_pos"):
 		blackboard.set_value("last_attack_pos", blackboard.get_value("attack_pos"))
 		blackboard.erase_value("attack_pos")
+
 	return SUCCESS

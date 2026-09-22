@@ -5,6 +5,7 @@
 
 [node name="Arrow" type="RayCast3D" unique_id=34676455]
 target_position = Vector3(0, 0, -1)
+collision_mask = 3
 script = ExtResource("1_nbxp2")
 
 [node name="Skeleton_Arrow" parent="." unique_id=74167537 instance=ExtResource("1_v4ifj")]
