@@ -19,7 +19,12 @@ func generate(_context: EQSContext) -> Array[EQSCandidate]:
 
 
 func project_to_navigation(point: Vector3, context: EQSContext, ) -> Variant:
-	var map := context.actor.get_world_3d().navigation_map
+	var world := context.actor.get_world_3d()
+	
+	if not world:
+		return null
+		
+	var map := world.navigation_map
 
 	if not map.is_valid():
 		return null
