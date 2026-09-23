@@ -10,7 +10,6 @@ var originalPosition: Vector3
 @export var debug := false
 
 @export var eqs_query: EQSQuery
-var eqs_context: EQSContext
 
 var snapped_speed := 0.0
 var is_moving := false
@@ -24,10 +23,7 @@ signal finish_locomotion()
 func _ready() -> void:
 	if avoidance_enabled:
 		navigation_agent.velocity_computed.connect(Callable(_on_navigation_agent_3d_velocity_computed))
-
-	if eqs_query != null:
-		eqs_context = eqs_query._get_context()
-	
+ 	
 	originalPosition = global_position;
 
 func _on_timer_timeout() -> void:
