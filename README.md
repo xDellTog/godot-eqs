@@ -4,9 +4,9 @@
   <a href="https://godotengine.org/download">
       <img alt="Godot Version" src="https://img.shields.io/badge/Godot Engine-4.7%2B-blue">
   </a>
-  <a href="LICENSE">
+  <!-- <a href="LICENSE">
     <img alt="Project License" src="https://img.shields.io/github/license/xDellTog/godot-eqs">
-  </a>
+  </a> -->
 </p>
 
 ## About
