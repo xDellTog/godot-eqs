@@ -2,36 +2,38 @@
 @icon("../assets/icons/matrix.svg")
 class_name EQSQuery extends EQS
 
-@export_category("Debug")
 var _candidate_material: ShaderMaterial = preload("../assets/debugger/candidate_material.tres")
-@export var is_enabled := false:
-	set(value):
-		is_enabled = value
 
-		if is_enabled:
+@export_group("Debug", "debug_")
+@export_custom(PROPERTY_HINT_GROUP_ENABLE, "") var debug_enabled := false:
+	set(value):
+		debug_enabled = value
+
+		if debug_enabled:
 			execute()
 		else:
 			_clear_debug()
 
-@export var show_scores := true
+@export_subgroup("Clear Debug", "clear_")
+@export_custom(PROPERTY_HINT_GROUP_ENABLE, "") var clear_enabled := true
+@export var clear_interval := 1.0
+var _clear_timer := 0.0
+
+@export_subgroup("Execute Debug", "execute_")
+@export_custom(PROPERTY_HINT_GROUP_ENABLE, "") var execute_enabled := false
+@export var execute_interval := 1.0
+var _execute_timer := 0.0
+
+@export_subgroup("Score", "score_")
+@export_custom(PROPERTY_HINT_GROUP_ENABLE, "") var score_enabled := true
 @export var score_size := 1.0
 @export var score_y_offset := 0.5
-@export var clear_timeout := 3.0
-var _clear_timeout_timer := 0.0
-
+ 
 var children: Array[Node]
-
-
-func _process(delta: float) -> void:
-	_clear_timeout_timer += delta
-
-	if _clear_timeout_timer >= clear_timeout:
-		_clear_debug()
-		_clear_timeout_timer = 0.0
-		
+	
 
 func execute() -> EQSResult:
-	_clear_timeout_timer = 0.0
+	_clear_timer = 0.0
 
 	children = get_children() as Array[Node]
 
@@ -71,13 +73,10 @@ func execute() -> EQSResult:
 		if best == null or candidate.score > best.score:
 			best = candidate
 
-	# if best == null:
-	# 	return EQSResult.new(all_candidates)
-
-	if is_enabled:
+	if debug_enabled:
 		_clear_unnecessary_debug(all_candidates)
 
-		_display_result(all_candidates)
+		_display_result(all_candidates, best)
 
 	return EQSResult.new(all_candidates, best)
 
@@ -107,6 +106,21 @@ func get_generator():
 			return generator
 	
 	return null
+
+
+func _process(delta: float) -> void:
+	if debug_enabled:
+		if clear_enabled:
+			_clear_timer += delta
+			if _clear_timer >= clear_interval:
+				_clear_debug()
+				_clear_timer = 0.0
+
+		if execute_enabled:
+			_execute_timer += delta
+			if _execute_timer >= execute_interval:
+				execute()
+				_execute_timer = 0.0
 
 
 func _get_debug_node() -> Node:
@@ -139,10 +153,8 @@ func _display_result(all_candidates: Array[EQSCandidate], winner: EQSCandidate =
 		debug.name = "Execution Debug"
 		debug.top_level = true
 		add_child(debug)
-		# debug.owner = get_tree().edited_scene_root
-
-	print(debug.name)
-
+		# debug_enabled.owner = get_tree().edited_scene_root
+ 
 	for i in range(all_candidates.size()):
 		_create_candidate_mesh(debug, i, all_candidates[i], winner)
 
@@ -177,7 +189,7 @@ func _create_candidate_mesh(parent: Node3D, index: int, candidate: EQSCandidate,
 	mesh_instance.set_instance_shader_parameter("Valid", candidate.valid)
 	mesh_instance.set_instance_shader_parameter("Tested", candidate.tested)
 	
-	if show_scores:
+	if score_enabled:
 		var score: Label3D
 		
 		if mesh_instance.get_child_count() > 0:
